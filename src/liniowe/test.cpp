@@ -171,9 +171,17 @@ TEST_F(AdvancedTest, EraseTest) {
 	ASSERT_TRUE(map2.find(2) ==  map2.end());
 }
 
-TEST_F(AdvancedTest, DISABLED_BandEraseTest) {
+TEST_F(AdvancedTest, BandEraseTest) {
 
-	//zakresy
+	ASSERT_EQ(map1.size(), 3);
+	EXPECT_TRUE(map1.erase(map1.begin(), map1.end()) == map1.end());
+	ASSERT_EQ(map1.size(), 0);
+
+	ASSERT_EQ(map2.size(), 3);
+	auto begin = map2.begin();
+	auto second = ++++map2.begin();
+	EXPECT_TRUE(map2.erase(begin, second) == second);
+	ASSERT_EQ(map2.size(), 1);
 }
 
 TEST_F(AdvancedTest, InfoEqTest) {

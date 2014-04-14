@@ -96,6 +96,7 @@ TEST_F(HashBasicTest, EmptyIteratorTest) {
 	EXPECT_TRUE(++it == end);
 	EXPECT_TRUE(++it == end);
 	EXPECT_TRUE(++it == end);
+	ASSERT_TRUE(it == end);
 	EXPECT_TRUE(it++ == end);
 	EXPECT_TRUE(it++ == end);
 	EXPECT_TRUE(it++ == end);
@@ -178,9 +179,17 @@ TEST_F(HashAdvancedTest, ClearTest) {
 	ASSERT_EQ(map2.size(), 0);
 }
 
-TEST_F(HashAdvancedTest, DISABLED_BandEraseTest) {
+TEST_F(HashAdvancedTest, BandEraseTest) {
 
-	//zakresy
+	ASSERT_EQ(map1.size(), 3);
+	EXPECT_TRUE(map1.erase(map1.begin(), map1.end()) == map1.end());
+	ASSERT_EQ(map1.size(), 0);
+
+	ASSERT_EQ(map2.size(), 3);
+	auto begin = map2.begin();
+	auto second = ++++map2.begin();
+	EXPECT_TRUE(map2.erase(begin, second) == second);
+	ASSERT_EQ(map2.size(), 1);
 }
 
 

@@ -166,7 +166,12 @@ ListMap::iterator ListMap::erase(ListMap::iterator f, ListMap::iterator l) {
 		return f;
 
 	Node* node = f.node;
-	Node* prev = (--f).node;
+	Node* prev;
+	if(f == begin())
+		prev = first;
+	else
+		(--f).node;
+
 	Node* next = l.node;
 
 	prev->next = next;

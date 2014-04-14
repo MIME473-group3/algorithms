@@ -1,1 +1,3 @@
+*project
+*.fuse*
 build/*

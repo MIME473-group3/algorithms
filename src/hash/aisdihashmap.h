@@ -121,7 +121,7 @@ private:
 
 				const_iterator& operator--() { 	//pre
 
-					if(node_ != sentinel()->next_)
+					if(node_->prev_ != sentinel())
 						node_ = node_->prev_;
 
 					return *this;
@@ -134,8 +134,8 @@ private:
 					return tmp;
 				}
 
-				inline bool operator==(const const_iterator& a) const { return node_ == a.node_; }
-				inline bool operator!=(const const_iterator& a) const {	return node_ != a.node_; }
+				inline bool operator==(const const_iterator& a) const { return list_ == a.list_ && node_ == a.node_; }
+				inline bool operator!=(const const_iterator& a) const {	return list_ != a.list_ || node_ != a.node_; }
 			};
 
 			class iterator: public const_iterator {
@@ -147,7 +147,7 @@ private:
 
 			public:
 				iterator() {}
-				iterator(const iterator& a) : const_iterator(a.list_, a.node_) { this->list_ = a.list_; this->node_ = a.node_;}
+				iterator(const iterator& a) : const_iterator(a) {}
 				inline T& operator*() const { return node_->data_; }
 				inline T* operator->() const { return &(node_->data_); }
 
@@ -215,14 +215,15 @@ private:
 			iterator unsafe_insert(const T& entry) {
 
 				Node* toBeInserted = new Node(entry);
+				if(empty())
+					head_->prev_ = toBeInserted;
 
 				toBeInserted->next_ = head_->next_;
 				toBeInserted->prev_ = head_;
 
 				head_->next_->prev_ = toBeInserted;
 				head_->next_ = toBeInserted;
-				if(head_->prev_ == head_)
-					head_->prev_ = toBeInserted;
+
 
 				return begin();
 			}
@@ -235,7 +236,7 @@ private:
 			const_iterator find(const K& k) const {
 
 				for (const_iterator it = this->begin(); it != this->end(); ++it)
-					if (it->first == k)
+					if (compFunc(it->first, k))
 						return it;
 
 				return end();
@@ -243,7 +244,7 @@ private:
 
 			V& operator[](const K& k) {
 
-				return insert(std::make_pair(K(), V())).first->second;
+				return insert(std::make_pair(k, V())).first->second;
 			}
 
 			bool empty() const {
@@ -259,13 +260,12 @@ private:
 					first = first->next_;
 					++size;
 				}
-
 				return size;
 			}
 
-			size_type count(const K& _Key) const {
+			size_type count(const K& k) const {
 
-				if (find(_Key) != end())
+				if (find(k) != end())
 					return 1;
 
 				return 0;
@@ -277,17 +277,14 @@ private:
 					return it;
 
 				Node* node = it.node_;
-				Node* next_ = it.node_->next_;
-				Node* sentinel_ = nullptr;
-				if (node == head_->next_)
-					sentinel_ = head_;
-				else
-					sentinel_ = (--it).node_;
+				Node* next = it.node_->next_;
+				Node* prev = it == begin() ? head_ : (--it).node_;
 
-				sentinel_->next_ = next_;
+				prev->next_ = next;
+				next->prev_ = prev;
 				delete node;
 
-				return iterator(this, next_);
+				return iterator(this, next);
 			}
 
 			iterator erase(iterator f, iterator l) {
@@ -296,11 +293,12 @@ private:
 					return f;
 
 				Node* node = f.node_;
-				Node* sentinel_ = (--f).node_;
-				Node* next_ = l.node_;
+				Node* prev = f == begin() ? head_ : (--f).node_;
+				Node* next = l.node_;
 
-				sentinel_->next_ = next_;
-				while (node->next_ != next_) {
+				prev->next_ = next;
+				next->prev_ = prev;
+				while (node->next_ != next) {
 
 					Node* tmp = node;
 					node = node->next_;
@@ -374,6 +372,21 @@ public:
 				return map_->container_[idx];
 			}
 
+			bool isListBegin() {
+
+				return listIterator_ == map_->container_[idx_].begin();
+			}
+
+			bool isListEnd() {
+
+				return listIterator_ == map_->container_[idx_].end();
+			}
+
+			bool isListEmpty() {
+
+				return map_->container_[idx_].empty();
+			}
+
 		public:
 			const_iterator() {};
 			const_iterator(const const_iterator& a) :  map_(a.map_), listIterator_(a.listIterator_), idx_(a.idx_) {};
@@ -385,8 +398,8 @@ public:
 			const_iterator& operator++() {
 
 				++listIterator_;
-				if(listIterator_ == getList(idx_).end() && idx_ < map_->length_ - 1) {
-					do { ++idx_; } while(idx_ < map_->length_ && getList(idx_).empty());
+				if(isListEnd() && idx_ < map_->length_ - 1) {
+					do { ++idx_; } while(idx_ < map_->length_ && isListEmpty());
 					listIterator_ = getList(idx_).begin();
 				}
 				return *this;
@@ -402,7 +415,7 @@ public:
 
 			//pre
 			const_iterator& operator--() {
-				if(listIterator_ != map_->container_[idx_].begin()) {
+				if(!isListBegin() && !isListEmpty()) {
 
 					--listIterator_;
 				} else if(idx_ > 0) {
@@ -410,7 +423,7 @@ public:
 					int tmp_idx = idx_;
 					do { --tmp_idx; } while(tmp_idx > 0 && getList(tmp_idx).empty());
 
-					if(!map_->container_[tmp_idx].empty()) {
+					if(!getList(tmp_idx).empty()) {
 
 						idx_ = tmp_idx;
 						listIterator_ = --(getList(tmp_idx).end());
@@ -428,23 +441,32 @@ public:
 				return tmp;
 			}
 
-			inline bool operator==(const const_iterator& a) const { return listIterator_ == a.listIterator_; }
-			inline bool operator!=(const const_iterator& a) const { return listIterator_ != a.listIterator_; }
+			inline bool operator==(const const_iterator& a) const {
+
+				return map_ == a.map_ && idx_ == a.idx_ && listIterator_ == a.listIterator_;
+			}
+
+			inline bool operator!=(const const_iterator& a) const {
+
+				return map_ != a.map_ || idx_ != a.idx_ || listIterator_ != a.listIterator_;
+			}
 		};
 
 	class iterator: public const_iterator {
 
 		iterator(AISDIHashMap* map, typename InnerList::iterator listIterator, int idx)
-		: const_iterator(map, listIterator, idx) { this->map_ = map; listIterator_ = listIterator; idx_ = idx;};
+		: const_iterator(map, listIterator, idx) {
+
+			this->map_ = map; listIterator_ = listIterator; this->idx_ = idx;
+		};
 
 		friend class InnerList;
 		friend class AISDIHashMap;
-		using const_iterator::idx_;
 		using const_iterator::listIterator_;
 
 	public:
 		iterator() {};
-		iterator(const iterator& a) : const_iterator(a.map_, a.listIterator_, a.idx_) {};
+		iterator(const iterator& a) : const_iterator(a) {};
 
 		inline T& operator*() const { return listIterator_.node_->data_; }
 		inline T* operator->() const { return &(listIterator_.node_->data_); }
@@ -485,9 +507,13 @@ public:
 		delete[] container_;
 	}
 
-	explicit AISDIHashMap(const AISDIHashMap<K, V, hashFunc, compFunc>& a) : length_(DEFAULT_LENGTH) {
+	explicit AISDIHashMap(const AISDIHashMap<K, V, hashFunc, compFunc>& a)
+		: length_(a.length_) {
 
-		//TODO
+		container_ = new InnerList[length_];
+		for(int i = 0; i < length_; ++i) {
+			container_[i] = InnerList(a.container_[i]);
+		}
 	}
 
 	//	===	methods	==========================================================================================
@@ -596,15 +622,15 @@ public:
 
 	size_type erase(const K& k) {
 
-		if(listByHash(k).erase(k) == 0)
+		if(listByKey(k).erase(k) == 0)
 			return 0;
 		return 1;
 	}
 
 	void clear() {
 
-		for(auto ptr = container_; ptr != container_ + length_; ++ptr)
-			ptr->clear();
+		for(auto list = container_; list != container_ + length_; ++list)
+			list->clear();
 	}
 
 private:
@@ -619,12 +645,12 @@ private:
 		return container_[indexOf(hash)];
 	}
 
-	InnerList& listByHash(const K& k) {
+	InnerList& listByKey(const K& k) {
 
-			return container_[indexOf(hashF(k))];
+			return container_[indexOf(hashFunc(k))];
 		}
 
-	InnerList& listByHash(const T& entry) {
+	InnerList& listByEntry(const T& entry) {
 
 		return container_[indexOf(hashF(entry.first))];
 	}
