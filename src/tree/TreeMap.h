@@ -55,29 +55,29 @@ public:
 
 struct TreeNode: CCount {
 	typedef std::pair<int, std::string> T;
-	TreeNode* parent;  ///< Parent node
-	TreeNode* left;    ///< The left child in the tree
-	TreeNode* right;   ///< The right child in the tree
-	T data;            ///< User's data
-	short b;            ///< balance
+	TreeNode* parent_;  ///< Parent node
+	TreeNode* left_;    ///< The left child in the tree
+	TreeNode* right_;   ///< The right child in the tree
+	T data_;            ///< User's data
+	short b_;            ///< balance
 	TreeNode(const T& d) :
-			parent(NULL), left(NULL), right(NULL), data(d), b(0) {
+			parent_(nullptr), left_(nullptr), right_(nullptr), data_(d), b_(0) {
 	}
 
 	TreeNode(const T& d, TreeNode* l, TreeNode* r) :
-			parent(NULL), left(l), right(r), data(d), b(0) {
+			parent_(nullptr), left_(l), right_(r), data_(d), b_(0) {
 	}
 
 	TreeNode(const T& d, TreeNode* p) :
-			parent(p), left(NULL), right(NULL), data(d), b(0) {
+			parent_(p), left_(nullptr), right_(nullptr), data_(d), b_(0) {
 	}
 
 	TreeNode(const T& d, TreeNode* p, TreeNode* l, TreeNode* r) :
-			parent(p), left(l), right(r), data(d), b(0) {
+			parent_(p), left_(l), right_(r), data_(d), b_(0) {
 	}
 
 	TreeNode(const T& d, short bal, TreeNode* p) :
-			parent(p), left(NULL), right(NULL), data(d), b(bal) {
+			parent_(p), left_(nullptr), right_(nullptr), data_(d), b_(bal) {
 	}
 };
 
@@ -91,8 +91,8 @@ public:
 
 protected:
 	typedef TreeNode Node;
-	Node* root;
-	TreeMapDetail* detail;
+	Node* root_;
+	TreeMapDetail* detail_;
 
 public:
 	typedef size_t size_type;
@@ -104,21 +104,25 @@ public:
 
 	class const_iterator: public std::iterator<std::bidirectional_iterator_tag, std::pair<K, V> > {
 
+
 	protected:
-		Node* node;
+		Node* node_;
 		friend class TreeMap;
-		const_iterator(Node* x) : node(x) {}
+		TreeMap* tree_;
+		Node* smaller_ancestor();
+		Node* greater_ancestor();
+		const_iterator(Node* x, TreeMap* tree) : node_(x), tree_(tree) {}
 
 	public:
 		const_iterator() {}
-		const_iterator(const const_iterator& a) : node(a.node) {}
+		const_iterator(const const_iterator& a) : node_(a.node_) {}
 
 		inline const T& operator*() const {
-			return node->data;
+			return node_->data_;
 		}
 
 		inline const T* operator->() const {
-			return &(node->data);
+			return &(node_->data_);
 		}
 
 		// preincrement
@@ -131,29 +135,33 @@ public:
 		const_iterator operator--(int);
 
 		inline bool operator==(const const_iterator& a) const {
-			return node == a.node;
+			return node_ == a.node_;
 		}
 
 		inline bool operator!=(const const_iterator& a) const {
-			return node != a.node;
+			return node_ != a.node_;
 		}
 	};
 
 	class iterator: public const_iterator {
-		iterator(Node* x) : const_iterator(x) {}
+		iterator(Node* x, TreeMap* tree) : const_iterator(x, tree) {
+			this->node_ = x;
+		}
 		friend class TreeMap;
+		using const_iterator::smaller_ancestor;
+		using const_iterator::greater_ancestor;
 
 	public:
 		iterator() {}
 		iterator(const const_iterator& a) :	const_iterator(a) {}
-		iterator(const iterator& a) : const_iterator(node) {}
+		iterator(const iterator& a) : const_iterator(a.node_, a.tree_) {}
 
 		inline T& operator*() const {
-			return node->data;
+			return node_->data_;
 		}
 
 		inline T* operator->() const {
-			return &(node->data);
+			return &(node_->data_);
 		}
 
 		iterator& operator++() {  // preincrement
@@ -179,12 +187,15 @@ public:
 		}
 	};
 
+	friend class iterator;
+	friend class const_iterator;
+
 	iterator begin();
 	const_iterator begin() const;
 	iterator end();
 	const_iterator end() const;
 	std::pair<iterator, bool> insert(const std::pair<K, V>& entry);
-	iterator unsafe_insert(const std::pair<K, V>& entry);
+	iterator unsafe_insert(const std::pair<K, V>& entry, Node* parent = nullptr);
 	iterator find(const K& k);
 	const_iterator find(const K& k) const;
 	V& operator[](const K& k);
@@ -205,5 +216,11 @@ public:
 
 	/// Assignment operator copy the source elements into this object.
 	TreeMap& operator=(const TreeMap&);
+
+private:
+	std::pair<Node*, bool> unsafe_find(const K& k);
+	static Node* smallest_descendant(Node* node);
+	static Node* greatest_descendant(Node* node);
+	int size_;
 };
 

@@ -48,7 +48,7 @@ protected:
 	/// the TreeMap class. Feel free to remove this method or add new
 	/// ones here.
 	static void erase(TreeMap* tm, const TreeMap::K& k) {
-		tm->root = NULL; // we just modified a protected field in tree map
+		tm->root_ = nullptr; // we just modified a protected field in tree map
 	}
 };
 
@@ -56,59 +56,90 @@ protected:
 // TreeMap and TreeMap::iterator methods
 //////////////////////////////////////////////////////////////////////////////
 
-TreeMap::TreeMap() {
-	root = NULL;
-}
+TreeMap::TreeMap()
+	: root_(new Node(std::make_pair(K(), V()), nullptr, nullptr, nullptr)), size_(0) {}
 
-TreeMap::TreeMap(const TreeMap& m) {
-}
+TreeMap::TreeMap(const TreeMap& m) {}
 
 TreeMap::~TreeMap() {
 	clear();
+	delete root_;
 }
 
-std::pair<TreeMap::iterator, bool> TreeMap::insert(
-		const std::pair<K, V>& entry) {
-	///@todo Finnish this
-	iterator i;
-	for (i = begin(); i != end(); ++i) {
-		if (i->first == entry.first)
-			return std::make_pair(i, (bool) false);
+std::pair<TreeMap::iterator, bool> TreeMap::insert(const std::pair<K, V>& entry) {
+
+	if(root_->parent_ == nullptr) {
+		root_->parent_ = new Node(entry, root_, nullptr, nullptr);
+		++size_;
+		return std::make_pair(iterator(root_->parent_, this), true);
 	}
-	return std::make_pair(i, (bool) false);
+
+	auto pair = unsafe_find(entry.first);
+	if(pair.second == true)
+		return std::make_pair(iterator(pair.first, this), false);
+
+	return std::make_pair(unsafe_insert(entry, pair.first), true);
 }
 
-TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry) {
-	///@todo  Finnish this
-	assert(0);
-	return iterator(root);
+TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry, Node* parent) {
+
+	if(parent == nullptr)
+		parent = unsafe_find(entry.first).first;
+
+	Node* newNode = new Node(entry, parent, nullptr, nullptr);
+	if(entry.first < parent->data_.first)
+		parent->left_ = newNode;
+	else
+		parent->right_ = newNode;
+
+	++size_;
+	return iterator(newNode, this);
+}
+
+std::pair<TreeMap::Node*, bool> TreeMap::unsafe_find(const K& k) {
+
+	Node* node = root_->parent_;
+	while(true) {
+		
+		if(k == node->data_.first)
+			return std::make_pair(node, true);
+
+		if(k < node->data_.first) {
+			if(node->left_ == nullptr)
+				return std::make_pair(node, false);
+			node = node->left_;
+		} else {
+			if(node->right_ == nullptr)
+				return std::make_pair(node, false);
+			node = node->right_;
+		}
+	}
 }
 
 TreeMap::iterator TreeMap::find(const K& k) {
-	assert(0);
-	return end();
+
+	auto pair = unsafe_find(k);
+	if(pair.second == false)
+		return end();
+
+	return iterator(pair.first, this);
 }
 
 TreeMap::const_iterator TreeMap::find(const K& k) const {
-	assert(0);
-	return end();
+	return const_cast<TreeMap*>(this)->find(k);
 }
 
 TreeMap::V& TreeMap::operator[](const K& k) {
-	///@todo Implement this
-	assert(0);
-	iterator i;
-	return i->second;
+	return insert(std::make_pair(k, V())).first->second;
 }
 
 bool TreeMap::empty() const {
-	return root == NULL;
+	return size_ == 0;
 }
 
 TreeMap::size_type TreeMap::size() const {
-	///@todo Implement this
-	assert(0);
-	return 0;
+
+	return size_;
 }
 
 TreeMap::size_type TreeMap::count(const K& _Key) const {
@@ -134,7 +165,6 @@ TreeMap::size_type TreeMap::erase(const K& key) {
 
 void TreeMap::clear() {
 	TreeMapDetail::erase(this, 0);
-	assert(0);
 }
 
 bool TreeMap::struct_eq(const TreeMap& another) const {
@@ -149,23 +179,46 @@ bool TreeMap::info_eq(const TreeMap& another) const {
 
 // preincrement
 TreeMap::const_iterator& TreeMap::const_iterator::operator ++() {
+	if(node_ == tree_->root_)
+		return *this;
+
+	if(node_->right_)
+		node_ = node_->right_;
+	else {
+		Node* tmp_node = greater_ancestor();
+		node_ = tmp_node ? tmp_node : tree_->root_;
+	}
+
 	return *this;
 }
 
 // postincrement
 TreeMap::const_iterator TreeMap::const_iterator::operator++(int) {
-	return *this;
+	const_iterator tmp = *this;
+	++(*this);
+	return tmp;
 }
 
 // predecrement
 TreeMap::const_iterator& TreeMap::const_iterator::operator--() {
-	///@todo Implement this
+
+	if(node_ == tree_->root_)
+		node_ = tree_->begin().node_;
+	else if(node_->left_)
+		node_ = node_->left_;
+	else {
+		Node* tmp_node = smaller_ancestor();
+		node_ = tmp_node ? tmp_node : node_ ;
+	}
+
 	return *this;
 }
 
 // postdecrement
 TreeMap::const_iterator TreeMap::const_iterator::operator--(int) {
-	return *this;
+	const_iterator tmp = *this;
+	--(*this);
+	return tmp;
 }
 
 TreeMap& TreeMap::operator=(const TreeMap& other) {
@@ -173,17 +226,66 @@ TreeMap& TreeMap::operator=(const TreeMap& other) {
 }
 
 TreeMap::iterator TreeMap::begin() {
-	return iterator(NULL);
+
+	if(empty()) return end();
+	return iterator(smallest_descendant(root_->parent_), this);
 }
 
 TreeMap::const_iterator TreeMap::begin() const {
-	return iterator(NULL);
+	return const_cast<TreeMap*>(this)->begin();
 }
 
 TreeMap::iterator TreeMap::end() {
-	return iterator(NULL);
+	return iterator(root_, this);
 }
 
 TreeMap::const_iterator TreeMap::end() const {
-	return iterator(NULL);
+	return const_cast<TreeMap*>(this)->end();
+}
+
+TreeMap::Node* TreeMap::smallest_descendant(Node* node) {
+
+	while(node->left_)
+		node = node->left_;
+
+	return node;
+}
+
+TreeMap::Node* TreeMap::greatest_descendant(Node* node) {
+
+	while(node->right_);
+		node = node->right_;
+	return node;
+}
+
+TreeMap::Node* TreeMap::const_iterator::smaller_ancestor() {
+
+	if(node_ == node_->parent_->right_)
+		return node_->parent_;
+
+	Node* node = node_->parent_;
+	while(node != node->parent_->right_ && node != tree_->root_)
+		node = node->parent_;
+
+	if(node == tree_->root_ || node->left_ == nullptr)
+		return nullptr;
+
+	//todo cos tu nie gra
+	return TreeMap::smallest_descendant(node->left_);
+}
+
+TreeMap::Node* TreeMap::const_iterator::greater_ancestor() {
+
+	if(node_ == node_->parent_->left_)
+		return node_->parent_;
+
+	Node* node = node_->parent_;
+	while(node != node->parent_->left_ && node != tree_->root_)
+		node = node->parent_;
+
+	if(node == tree_->root_ || node->right_ == nullptr)
+		return nullptr;
+
+	//todo cos tu nie gra
+	return TreeMap::smallest_descendant(node->right_);
 }

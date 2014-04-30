@@ -8,8 +8,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 add_library(lib_${PROJECT_NAME} asd.cc)
 
 #	prepare aisdi's exe
-add_executable(aisdi_${PROJECT_NAME} main.cc)
-target_link_libraries(aisdi_${PROJECT_NAME} lib_${PROJECT_NAME} lib_timer ${tree_LIB})
+#add_executable(aisdi_${PROJECT_NAME} main.cc)
+#target_link_libraries(aisdi_${PROJECT_NAME} lib_${PROJECT_NAME} lib_timer ${tree_LIB})
 
 #	Set up google test
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
