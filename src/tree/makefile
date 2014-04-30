@@ -1,15 +1,7 @@
-all : asd asd_fast
+all : asd 
 
 asd : asd.cc
-	g++ -D _SUNOS asd.cc /materialy/AISDI/tree/main.cc /materialy/AISDI/tree/timer.cc /materialy/AISDI/tests/ltest_tree.so -o asd 
-asd_fast : asd.cc
-	g++ -O2 -D NDEBUG -D _SUNOS asd.cc /materialy/AISDI/tree/main.cc /materialy/AISDI/tree/timer.cc /materialy/AISDI/tests/ltest_tree.so -o asd_fast
+	g++ timer.cc asd.cc main.cc  ../../lib/aisdi/libtest_tree.so -o asd 
+
 del :
 	rm asd
-
-debug : 
-	g++ -g -D _SUNOS asd.cc /materialy/AISDI/tree/main.cc /materialy/AISDI/tree/timer.cc /materialy/AISDI/tests/ltest_tree.so -o asd_debug 
-	gdb asd_debug
-
-view:
-	lynx /materialy/AISDI/tree/info/index.html

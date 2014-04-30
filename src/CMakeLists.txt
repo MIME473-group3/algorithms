@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project( aisdi  )
 
-set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -Wall -o3 -funroll-loops")
+set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS} -Wall")
 
 #	include relevant include/source dirs
 include_directories(${CMAKE_SOURCE_DIR})
@@ -9,18 +9,35 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 #	aisdi test lib
 find_library(
-	aisdi_LIBS 
-	NAMES test_liniowe test_hash test_tree
-	PATHS  /home/adam/workspace/aisdi/lib/aisdi
+	liniowe_LIB
+	NAMES test_liniowe #test_liniowe2
+	PATHS ${CMAKE_SOURCE_DIR}/../lib/aisdi
 )
 
 find_library(
-	aisdi2_LIBS 
-	NAMES test_liniowe2 test_hash3 test_tree
-	PATHS  /home/adam/workspace/aisdi/lib/aisdi
+	hash_LIB
+	NAMES test_hash
+	PATHS ${CMAKE_SOURCE_DIR}/../lib/aisdi
+)
+
+find_library(
+	hash3_LIB
+	NAMES test_hash3
+	PATHS ${CMAKE_SOURCE_DIR}/../lib/aisdi
+)
+
+find_library(
+	tree_LIB
+	NAMES test_tree
+	PATHS ${CMAKE_SOURCE_DIR}/../lib/aisdi
 )
 
 
 add_subdirectory(gtest)
+add_subdirectory(timer)
+
+include_directories(${timer_SOURCE_DIR})
+
 add_subdirectory(liniowe)
 add_subdirectory(hash)
+add_subdirectory(tree)

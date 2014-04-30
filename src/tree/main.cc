@@ -24,6 +24,7 @@ ALL RIGHTS RESERVED
 #include "timer.h"
 #else
 #include "TreeMap.h"
+#include "timer.h"
 #endif
 
 int CCount::count=0;
@@ -33,7 +34,7 @@ void test();
 
 int main()
 {
-   struct time_m czasstart;
+   time_m czasstart;
    double czas;
    std::cout << "AISDI tree: wchodze do funkcji main." << std::endl;
    test();
