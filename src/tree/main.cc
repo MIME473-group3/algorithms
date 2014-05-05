@@ -27,17 +27,15 @@ ALL RIGHTS RESERVED
 #include "timer.h"
 #endif
 
-int CCount::count=0;
-
 int Test2();
-void test();
+//void test();
 
 int main()
 {
    time_m czasstart;
    double czas;
    std::cout << "AISDI tree: wchodze do funkcji main." << std::endl;
-   test();
+//   test();
    // Biblioteka z bardziej rygorystyczna wersja tych testow bedzie udostepniona na nastepnych zajeciach.
    czasstart = timer_start();
    Test2();

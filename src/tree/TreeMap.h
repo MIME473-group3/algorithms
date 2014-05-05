@@ -53,13 +53,13 @@ public:
 	}
 };
 
-struct TreeNode: CCount {
+struct TreeNode : CCount {
 	typedef std::pair<int, std::string> T;
 	TreeNode* parent_;  ///< Parent node
 	TreeNode* left_;    ///< The left child in the tree
 	TreeNode* right_;   ///< The right child in the tree
 	T data_;            ///< User's data
-	short b_;            ///< balance
+	unsigned char b_;            ///< balance
 	TreeNode(const T& d) :
 			parent_(nullptr), left_(nullptr), right_(nullptr), data_(d), b_(0) {
 	}
@@ -76,7 +76,7 @@ struct TreeNode: CCount {
 			parent_(p), left_(l), right_(r), data_(d), b_(0) {
 	}
 
-	TreeNode(const T& d, short bal, TreeNode* p) :
+	TreeNode(const T& d, unsigned char bal, TreeNode* p) :
 			parent_(p), left_(nullptr), right_(nullptr), data_(d), b_(bal) {
 	}
 };
@@ -115,7 +115,7 @@ public:
 
 	public:
 		const_iterator() {}
-		const_iterator(const const_iterator& a) : node_(a.node_) {}
+		const_iterator(const const_iterator& a) : node_(a.node_), tree_(a.tree_) {}
 
 		inline const T& operator*() const {
 			return node_->data_;
@@ -222,5 +222,8 @@ private:
 	static Node* smallest_descendant(Node* node);
 	static Node* greatest_descendant(Node* node);
 	int size_;
+	Node** pointerFromParent(Node* node);
+	Node* getAnOnlyChild(Node* node);
+	bool hasTwoChildren(Node* node);
 };
 

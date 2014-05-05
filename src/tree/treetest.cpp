@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "TreeMap.h"
 
-int CCount::count = 1;
 namespace {
 
 class BasicTest : public ::testing::Test {
