@@ -18,6 +18,9 @@ public:
 		map1[4] = "wef";
 
 		map2[2] = "a";
+		map2[0] = "g";
+		map2[1] = "h";
+		map2[-1] = "i";
 		map2[3] = "b";
 		map2[4] = "c";
 
@@ -36,9 +39,9 @@ TEST_F(BasicTest, InsertTest) {
 
 	TreeMap map;
 	std::pair<TreeMap::iterator, bool> result;
-	result = map.insert(std::make_pair(0, "a"));
+	result = map.insert(std::make_pair(1, "a"));
 	EXPECT_TRUE(result.second);
-	EXPECT_EQ(result.first->first, 0);
+	EXPECT_EQ(result.first->first, 1);
 	EXPECT_EQ(result.first->second, "a");
 	result = map.insert(std::make_pair(4, "b"));
 	EXPECT_TRUE(result.second);
@@ -49,9 +52,29 @@ TEST_F(BasicTest, InsertTest) {
 	EXPECT_EQ(result.first->first, 16);
 	EXPECT_EQ(result.first->second, "c");
 
-	result = map.insert(std::make_pair(0, "zz"));
+	result = map.insert(std::make_pair(3, "s"));
+	EXPECT_TRUE(result.second);
+	EXPECT_EQ(result.first->first, 3);
+	EXPECT_EQ(result.first->second, "s");
+
+	result = map.insert(std::make_pair(5, "h"));
+	EXPECT_TRUE(result.second);
+	EXPECT_EQ(result.first->first, 5);
+	EXPECT_EQ(result.first->second, "h");
+
+	result = map.insert(std::make_pair(9, "fsdf"));
+	EXPECT_TRUE(result.second);
+	EXPECT_EQ(result.first->first, 9);
+	EXPECT_EQ(result.first->second, "fsdf");
+
+	result = map.insert(std::make_pair(12, "kk"));
+	EXPECT_TRUE(result.second);
+	EXPECT_EQ(result.first->first, 12);
+	EXPECT_EQ(result.first->second, "kk");
+
+	result = map.insert(std::make_pair(1, "zz"));
 	EXPECT_FALSE(result.second);
-	EXPECT_EQ(result.first->first, 0);
+	EXPECT_EQ(result.first->first, 1);
 	EXPECT_EQ(result.first->second, "a");
 }
 
@@ -82,6 +105,44 @@ TEST_F(BasicTest, SizeTest) {
 	map[16] = "c";
 	EXPECT_EQ(map.size(), 3);
 }
+
+TEST_F(BasicTest, AddingBiggerElements) {
+
+	TreeMap m;
+
+	for(int i = 0; i < 100; ++i) {
+		m[i] = std::to_string(i);
+		ASSERT_EQ(m.size(), (i + 1));
+	}
+}
+
+TEST_F(BasicTest, AddingSmallerElements) {
+
+	TreeMap m;
+
+	for(int i = 100; i < 0; --i) {
+		m[i] = std::to_string(i);
+		ASSERT_EQ(m.size(), i + 1);
+	}
+}
+
+TEST_F(BasicTest, AddingAlternatingElements) {
+
+	TreeMap m;
+
+	for(int i = 1; i < 101; ++i) {
+		int l = i;
+		m[l] = std::to_string(l);
+		l = l * 371 % 100;
+		m[l] = std::to_string(l);
+		l = l * 973 % 117;
+		m[l] = std::to_string(l);
+		l = - (l*l) & 111;
+		m[l] = std::to_string(l);
+	}
+}
+
+
 
 TEST_F(AdvancedTest, EndsNotEqual) {
 
@@ -130,11 +191,11 @@ TEST_F(AdvancedTest, IteratorTest) {
 //	EXPECT_EQ(map2.end()->second, "");
 
 	auto it = map2.begin();
-	ASSERT_EQ(it->second, "a");
-	EXPECT_EQ((++it)->second, "b");
-	EXPECT_EQ((it)->second, "b");
-	EXPECT_EQ((it++)->second, "b");
-	EXPECT_EQ((it)->second, "c");
+	ASSERT_EQ(it->second, "i");
+	EXPECT_EQ((++it)->second, "g");
+	EXPECT_EQ((it)->second, "g");
+	EXPECT_EQ((it++)->second, "g");
+	EXPECT_EQ((it)->second, "h");
 
 	it = map2.end();
 	ASSERT_EQ(it->second, "");
@@ -157,15 +218,15 @@ TEST_F(AdvancedTest, IteratorTest) {
 
 TEST_F(AdvancedTest, EraseTest) {
 
-	ASSERT_EQ(map2.size(), 3);
+	ASSERT_EQ(map2.size(), 6);
 	map2.erase(4);
-	ASSERT_EQ(map2.size(), 2);
+	ASSERT_EQ(map2.size(), 5);
 	ASSERT_TRUE(map2.find(4) == map2.end());
 	map2.erase(3);
-	ASSERT_EQ(map2.size(), 1);
+	ASSERT_EQ(map2.size(), 4);
 	ASSERT_TRUE(map2.find(3) == map2.end());
 	map2.erase(2);
-	ASSERT_EQ(map2.size(), 0);
+	ASSERT_EQ(map2.size(), 3);
 	ASSERT_TRUE(map2.find(2) ==  map2.end());
 }
 
@@ -175,11 +236,11 @@ TEST_F(AdvancedTest, BandEraseTest) {
 	EXPECT_TRUE(map1.erase(map1.begin(), map1.end()) == map1.end());
 	ASSERT_EQ(map1.size(), 0);
 
-	ASSERT_EQ(map2.size(), 3);
+	ASSERT_EQ(map2.size(), 6);
 	auto begin = map2.begin();
 	auto second = ++++map2.begin();
 	EXPECT_TRUE(map2.erase(begin, second) == second);
-	ASSERT_EQ(map2.size(), 1);
+	ASSERT_EQ(map2.size(), 4);
 }
 
 TEST_F(AdvancedTest, InfoEqTest) {
@@ -187,20 +248,14 @@ TEST_F(AdvancedTest, InfoEqTest) {
 	EXPECT_TRUE(map2.info_eq(map2));
 
 	TreeMap map, map3;
-	for(TreeMap::iterator it = map2.begin(); it != map2.end(); ++it) {
-
+	for(TreeMap::iterator it = map2.begin(); it != map2.end(); ++it)
 		map.insert(*it);
-	}
 
-	for(TreeMap::iterator it = map.begin(); it != map.end(); ++it) {
-
+	for(TreeMap::iterator it = map.begin(); it != map.end(); ++it)
 			map3.insert(*it);
-		}
-
 
 	EXPECT_TRUE(map2.info_eq(map3));
 	EXPECT_TRUE(map3.info_eq(map2));
-
 
 	EXPECT_FALSE(opp2.info_eq(map1));
 	EXPECT_FALSE(map1.info_eq(opp2));
@@ -214,30 +269,28 @@ TEST_F(AdvancedTest, StructEqTest) {
 	EXPECT_FALSE(opp2.struct_eq(map2));
 	EXPECT_FALSE(map2.struct_eq(opp2));
 
-
 	EXPECT_FALSE(opp2.struct_eq(map1));
 	EXPECT_FALSE(map1.struct_eq(opp2));
 }
 
-TEST_F(AdvancedTest, EqAddingElements) {
+TEST_F(AdvancedTest, CompareEmptyMaps) {
 
 	TreeMap m1, m2;
+	EXPECT_EQ(m1, m2);
+	EXPECT_EQ(m2, m1);
+	EXPECT_EQ(m2, m2);
+	EXPECT_EQ(m1, m1);
 
-	ASSERT_TRUE(m1.info_eq(m2));
-	ASSERT_TRUE(m1.struct_eq(m2));
+	EXPECT_TRUE(m1.info_eq(m2));
+	EXPECT_TRUE(m2.info_eq(m1));
+	EXPECT_TRUE(m1.info_eq(m1));
+	EXPECT_TRUE(m2.info_eq(m2));
 
-	for(int i = 0; i < 100; ++i) {
-		m1[i] = std::to_string(i);
-		m2[i] = std::to_string(i);
-		ASSERT_TRUE(m1.info_eq(m2));
-		ASSERT_TRUE(m1.struct_eq(m2));
-		ASSERT_EQ(m1[i / 2], m2[i / 2]);
-	}
+	EXPECT_TRUE(m1.struct_eq(m2));
+	EXPECT_TRUE(m2.struct_eq(m1));
+	EXPECT_TRUE(m1.struct_eq(m1));
+	EXPECT_TRUE(m2.struct_eq(m2));
 
-	m2.erase(91);
-	m1.erase(91);
-	ASSERT_TRUE(m1.info_eq(m2));
-	ASSERT_TRUE(m1.struct_eq(m2));
 }
 
 

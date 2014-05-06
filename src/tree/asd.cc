@@ -26,31 +26,11 @@
  Copyright (c) 2005 Instytut Informatyki, Politechnika Warszawska
  ALL RIGHTS RESERVED
  *******************************************************************************/
-
-#include <assert.h>
-#include <algorithm>
-
-#include <iostream>
-
 #ifdef _SUNOS
 #include "/materialy/AISDI/tree/TreeMap.h" 
 #else
 #include "TreeMap.h"
 #endif
-
-/// A helper class.
-class TreeMapDetail //Helper
-{
-protected:
-	friend class TreeMap;
-
-	/// Stupid example of a method that modifies a protected field in
-	/// the TreeMap class. Feel free to remove this method or add new
-	/// ones here.
-	static void erase(TreeMap* tm, const TreeMap::K& k) {
-		tm->root_ = nullptr; // we just modified a protected field in tree map
-	}
-};
 
 //////////////////////////////////////////////////////////////////////////////
 // TreeMap and TreeMap::iterator methods
@@ -58,12 +38,28 @@ protected:
 
 int CCount::count = 0;
 
+#include <iostream>
+
 TreeMap::TreeMap()
 	: root_(new Node(std::make_pair(K(), V()), nullptr, nullptr, nullptr)), size_(0) {}
 
-TreeMap::TreeMap(const TreeMap& m) {}
+TreeMap::TreeMap(const TreeMap& m)
+	: root_(new Node(std::make_pair(K(), V()), nullptr, nullptr, nullptr)), size_(0) {
+
+	copyNode(m.root_->parent_);
+}
+
+void TreeMap::copyNode(Node* node) {
+
+	if(!node) return;
+
+	insert(node->data_);
+	copyNode(node->left_);
+	copyNode(node->right_);
+}
 
 TreeMap::~TreeMap() {
+
 	clear();
 	delete root_;
 }
@@ -281,17 +277,17 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 }
 
 // preincrement
-TreeMap::const_iterator& TreeMap::const_iterator::operator ++() {
+TreeMap::const_iterator& TreeMap::const_iterator::operator++() {
+
 	if(node_ == tree_->root_)
 		return *this;
 
-	if(node_->right_)
-		node_ = node_->right_;
-	else {
+	if(node_->right_) {
+		node_ = smallest_descendant(node_->right_);
+	} else {
 		Node* tmp_node = greater_ancestor();
 		node_ = tmp_node ? tmp_node : tree_->root_;
 	}
-
 	return *this;
 }
 
@@ -305,18 +301,14 @@ TreeMap::const_iterator TreeMap::const_iterator::operator++(int) {
 // predecrement
 TreeMap::const_iterator& TreeMap::const_iterator::operator--() {
 
-	if(node_ == tree_->root_) {
-		if(tree_->empty())
-			return *this;
-
+	if(node_ == tree_->root_ && !tree_->empty())
 		node_ = TreeMap::greatest_descendant(tree_->root_->parent_);
-	} else if(node_->left_)
-		node_ = node_->left_;
+	else if(node_->left_)
+		node_ = greatest_descendant(node_->left_);
 	else {
 		Node* tmp_node = smaller_ancestor();
 		node_ = tmp_node ? tmp_node : node_ ;
 	}
-
 	return *this;
 }
 
@@ -353,45 +345,65 @@ TreeMap::Node* TreeMap::smallest_descendant(Node* node) {
 
 	while(node->left_)
 		node = node->left_;
-
 	return node;
 }
 
 TreeMap::Node* TreeMap::greatest_descendant(Node* node) {
 
-	while(node->right_ != nullptr)
+	while(node->right_)
 		node = node->right_;
 	return node;
 }
 
 TreeMap::Node* TreeMap::const_iterator::smaller_ancestor() {
 
-	if(node_ == node_->parent_->right_)
-		return node_->parent_;
-
-	Node* node = node_->parent_;
-	while(node != node->parent_->right_ && node != tree_->root_)
-		node = node->parent_;
-
-	if(node == tree_->root_ || node->left_ == nullptr)
+	if(isEnd() || isRoot())
 		return nullptr;
 
-	//todo cos tu nie gra
-	return TreeMap::smallest_descendant(node->left_);
+	Node* node = node_;
+	while(node->parent_->left_ == node)
+		node = node->parent_;
+
+	return node && node->parent_ ? node->parent_ : nullptr;
 }
 
 TreeMap::Node* TreeMap::const_iterator::greater_ancestor() {
 
-	if(node_ == node_->parent_->left_)
-		return node_->parent_;
-
-	Node* node = node_->parent_;
-	while(node != node->parent_->left_ && node != tree_->root_)
-		node = node->parent_;
-
-	if(node == tree_->root_ || node->right_ == nullptr)
+	if(isEnd() || isRoot())
 		return nullptr;
 
-	//todo cos tu nie gra
-	return TreeMap::smallest_descendant(node->right_);
+	Node* node = node_;
+	while(node->parent_->right_ == node)
+		node = node->parent_;
+
+	return node && node->parent_ ? node->parent_ : nullptr;
+}
+
+bool TreeMap::isRootNode(Node* node) {
+
+	return root_->parent_ && (root_->parent_ == node);
+}
+
+bool TreeMap::isEndNode(Node* node) {
+
+	return root_ == node;
+}
+
+bool TreeMap::const_iterator::isRoot() {
+
+	return tree_->isRootNode(node_);
+}
+
+bool TreeMap::const_iterator::isEnd() {
+
+	return tree_->isEndNode(node_);
+}
+
+bool TreeMap::const_iterator::isRightChild() {
+
+	return node_->parent_ && (node_ == node_->parent_->right_);
+}
+bool TreeMap::const_iterator::isLeftChild() {
+
+	return node_->parent_ && (node_ == node_->parent_->left_);
 }

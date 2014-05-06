@@ -81,10 +81,7 @@ struct TreeNode : CCount {
 	}
 };
 
-class TreeMapDetail;
-
 class TreeMap {
-	friend class TreeMapDetail;
 public:
 	typedef int K;
 	typedef std::string V;
@@ -92,7 +89,6 @@ public:
 protected:
 	typedef TreeNode Node;
 	Node* root_;
-	TreeMapDetail* detail_;
 
 public:
 	typedef size_t size_type;
@@ -112,6 +108,10 @@ public:
 		Node* smaller_ancestor();
 		Node* greater_ancestor();
 		const_iterator(Node* x, TreeMap* tree) : node_(x), tree_(tree) {}
+		bool isRoot();
+		bool isEnd();
+		bool isRightChild();
+		bool isLeftChild();
 
 	public:
 		const_iterator() {}
@@ -225,5 +225,8 @@ private:
 	Node** pointerFromParent(Node* node);
 	Node* getAnOnlyChild(Node* node);
 	bool hasTwoChildren(Node* node);
+	bool isRootNode(Node* node);
+	bool isEndNode(Node* node);
+	void copyNode(Node* node);
 };
 
