@@ -28,7 +28,7 @@ ALL RIGHTS RESERVED
 #endif
 
 int Test2();
-//void test();
+void test();
 
 int main()
 {

@@ -108,21 +108,17 @@ public:
 		Node* smaller_ancestor();
 		Node* greater_ancestor();
 		const_iterator(Node* x, TreeMap* tree) : node_(x), tree_(tree) {}
-		bool isRoot();
-		bool isEnd();
-		bool isRightChild();
-		bool isLeftChild();
 
 	public:
 		const_iterator() {}
 		const_iterator(const const_iterator& a) : node_(a.node_), tree_(a.tree_) {}
 
 		inline const T& operator*() const {
-			return node_->data_;
+			return node_? node_->data_ : std::make_pair(K(), V());
 		}
 
 		inline const T* operator->() const {
-			return &(node_->data_);
+			return node_ ? &(node_->data_) : nullptr;
 		}
 
 		// preincrement
@@ -135,11 +131,11 @@ public:
 		const_iterator operator--(int);
 
 		inline bool operator==(const const_iterator& a) const {
-			return node_ == a.node_;
+			return (tree_ == a.tree_) && (node_ == a.node_);
 		}
 
 		inline bool operator!=(const const_iterator& a) const {
-			return node_ != a.node_;
+			return (tree_ != a.tree_) || (node_ != a.node_);
 		}
 	};
 
@@ -225,8 +221,6 @@ private:
 	Node** pointerFromParent(Node* node);
 	Node* getAnOnlyChild(Node* node);
 	bool hasTwoChildren(Node* node);
-	bool isRootNode(Node* node);
-	bool isEndNode(Node* node);
 	void copyNode(Node* node);
 };
 

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "TreeMap.h"
+#include <string>
 
 namespace {
 
@@ -157,15 +158,32 @@ TEST_F(AdvancedTest, FindTest) {
 	TreeMap::iterator end = map1.end();
 
 	EXPECT_TRUE(it ==  end);
-	EXPECT_TRUE(map1.find(0)->first == 0);
-	EXPECT_TRUE(map1.find(0)->second == "1");
+	EXPECT_EQ(map1.find(0)->first, 0);
+	EXPECT_EQ(map1.find(0)->second, "1");
 
-	EXPECT_TRUE(map1.find(2)->first == 2);
-	EXPECT_TRUE(map1.find(2)->second == "aha");
+	EXPECT_EQ(map1.find(2)->first, 2);
+	EXPECT_EQ(map1.find(2)->second, "aha");
 
-	EXPECT_TRUE(map1.find(4)->first == 4);
-	EXPECT_TRUE(map1.find(4)->second ==  "wef");
+	EXPECT_EQ(map1.find(4)->first, 4);
+	EXPECT_EQ(map1.find(4)->second,  "wef");
 }
+
+TEST_F(AdvancedTest, EmptyFindTest) {
+
+	TreeMap m;
+	EXPECT_TRUE(m.find(0) == m.end());
+	EXPECT_TRUE(m.find(1) == m.end());
+	EXPECT_TRUE(m.find(-1) == m.end());
+	EXPECT_TRUE(m.find(2) == m.end());
+
+	m[1] = "muha";
+
+	EXPECT_TRUE(m.find(1) != m.end());
+	EXPECT_TRUE(m.find(1) == m.begin());
+	EXPECT_EQ(m.find(1)->first, 1);
+	EXPECT_EQ(m.find(1)->second, "muha");
+}
+
 
 TEST_F(AdvancedTest, EmptyIteratorTest) {
 
@@ -188,8 +206,6 @@ TEST_F(AdvancedTest, EmptyIteratorTest) {
 
 TEST_F(AdvancedTest, IteratorTest) {
 
-//	EXPECT_EQ(map2.end()->second, "");
-
 	auto it = map2.begin();
 	ASSERT_EQ(it->second, "i");
 	EXPECT_EQ((++it)->second, "g");
@@ -198,7 +214,7 @@ TEST_F(AdvancedTest, IteratorTest) {
 	EXPECT_EQ((it)->second, "h");
 
 	it = map2.end();
-	ASSERT_EQ(it->second, "");
+//	ASSERT_EQ(it->second, "");
 	EXPECT_EQ((--it)->second, "c");
 	ASSERT_EQ((it)->second, "c");
 
@@ -214,6 +230,25 @@ TEST_F(AdvancedTest, IteratorTest) {
 
 	EXPECT_EQ((it++)->second, "b");
 	EXPECT_EQ((it)->second, "c");
+}
+
+TEST_F(AdvancedTest, BigIteratorTest){
+
+	auto it = map2.begin();
+	EXPECT_EQ(it->first, -1);
+	EXPECT_EQ((++it)->first, 0);
+	EXPECT_EQ((++it)->first, 1);
+	EXPECT_EQ((++it)->first, 2);
+	EXPECT_EQ((++it)->first, 3);
+	EXPECT_EQ((++it)->first, 4);
+
+	EXPECT_TRUE((++it)==map2.end());
+	EXPECT_EQ((--it)->first, 4);
+	EXPECT_EQ((--it)->first, 3);
+	EXPECT_EQ((--it)->first, 2);
+	EXPECT_EQ((--it)->first, 1);
+	EXPECT_EQ((--it)->first, 0);
+	EXPECT_EQ((--it)->first, -1);
 }
 
 TEST_F(AdvancedTest, EraseTest) {
@@ -238,27 +273,35 @@ TEST_F(AdvancedTest, BandEraseTest) {
 
 	ASSERT_EQ(map2.size(), 6);
 	auto begin = map2.begin();
-	auto second = ++++map2.begin();
-	EXPECT_TRUE(map2.erase(begin, second) == second);
+	auto third = ++++map2.begin();
+	ASSERT_EQ(third->first, 1);
+	EXPECT_TRUE(map2.erase(begin, third) == third);
+	ASSERT_EQ(third->first, 1);
+
 	ASSERT_EQ(map2.size(), 4);
+
+
 }
 
 TEST_F(AdvancedTest, InfoEqTest) {
 
 	EXPECT_TRUE(map2.info_eq(map2));
 
-	TreeMap map, map3;
-	for(TreeMap::iterator it = map2.begin(); it != map2.end(); ++it)
-		map.insert(*it);
+//	TreeMap map, map3;
+//	for(TreeMap::iterator it = map2.begin(); it != map2.end(); ++it)
+//		map.insert(*it);
+//
+//	for(TreeMap::iterator it = map.begin(); it != map.end(); ++it)
+//			map3.insert(*it);
+//
+//	EXPECT_TRUE(map2.info_eq(map3));
+//	EXPECT_TRUE(map3.info_eq(map2));
+//
+//	EXPECT_FALSE(opp2.info_eq(map1));
+//	EXPECT_FALSE(map1.info_eq(opp2));
 
-	for(TreeMap::iterator it = map.begin(); it != map.end(); ++it)
-			map3.insert(*it);
-
-	EXPECT_TRUE(map2.info_eq(map3));
-	EXPECT_TRUE(map3.info_eq(map2));
-
-	EXPECT_FALSE(opp2.info_eq(map1));
-	EXPECT_FALSE(map1.info_eq(opp2));
+//	TreeMap m1, m2;
+//	EXPECT_TRUE(m1.info_eq(m2));
 
 }
 
@@ -290,7 +333,34 @@ TEST_F(AdvancedTest, CompareEmptyMaps) {
 	EXPECT_TRUE(m2.struct_eq(m1));
 	EXPECT_TRUE(m1.struct_eq(m1));
 	EXPECT_TRUE(m2.struct_eq(m2));
+}
 
+TEST_F(AdvancedTest, FillAndCompareMaps) {
+
+	TreeMap m1, m2;
+	m1[0] = "aha";
+	m2[0] = "aha";
+	EXPECT_TRUE(m1.info_eq(m2));
+	EXPECT_TRUE(m2.info_eq(m1));
+
+	m1[1] = "aha";
+	m2[1] = "aha";
+	EXPECT_TRUE(m1.info_eq(m2));
+	EXPECT_TRUE(m2.info_eq(m1));
+
+	m1[-1] = "aha";
+	m2[-1] = "aha";
+	EXPECT_TRUE(m1.info_eq(m2));
+	EXPECT_TRUE(m2.info_eq(m1));
+}
+
+TEST_F(AdvancedTest, CopyConstructorTest) {
+
+	TreeMap m(map2);
+	EXPECT_TRUE(m.info_eq(map2));
+	EXPECT_TRUE(map2.info_eq(m));
+	EXPECT_TRUE(m.struct_eq(map2));
+	EXPECT_TRUE(map2.info_eq(m));
 }
 
 
