@@ -23,58 +23,55 @@
  - 2005.10.25 Pawel Cichocki: wrote it
 
  COPYRIGHT:
- Copyright_ (c) 2005 Instytut Informatyki, Politechnika Warszawska
+ Copyright (c) 2005 Instytut Informatyki, Politechnika Warszawska
  ALL RIGHTS RESERVED
  *******************************************************************************/
 #ifdef _SUNOS
-#include "tree/TreeMap.h" 
+#include "/materialy/AISDI/tree/TreeMap.h" 
 #else
 #include "TreeMap.h"
 #endif
 
+//////////////////////////////////////////////////////////////////////////////
+// TreeMap and TreeMap::iterator methods
+//////////////////////////////////////////////////////////////////////////////
+
 int CCount::count = 0;
-TreeMap::Node* TreeMap::last_ = nullptr;
 
-TreeMap::TreeMap() : size_(0), root_(nullptr) {}
+#include <iostream>
 
-TreeMap::TreeMap(const TreeMap& m) : size_(0), root_(nullptr) {
+TreeMap::TreeMap()
+	: root_(nullptr), size_(0) {}
+
+TreeMap::TreeMap(const TreeMap& m)
+	: root_(nullptr), size_(0) {
 
 	copyNode(m.root_);
 }
 
 TreeMap::~TreeMap() {
+
 	clear();
+	delete root_;
 }
 
-void TreeMap::copyNode(Node* node) {
-
-	if (!node)
-		return;
-
-	insert(node->data_);
-	copyNode(node->left_);
-	copyNode(node->right_);
-}
-
-std::pair<TreeMap::iterator, bool> TreeMap::insert(
-		const std::pair<K, V>& entry) {
+std::pair<TreeMap::iterator, bool> TreeMap::insert(const std::pair<K, V>& entry) {
 
 	auto pair = unsafe_find(entry.first);
-	if (pair.second == true)
+	if(pair.second == true)
 		return std::make_pair(iterator(pair.first, this), false);
 	return std::make_pair(unsafe_insert(entry, pair.first), true);
 }
 
-TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry,
-		Node* parent) {
+TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry, Node* parent) {
 
 	Node* newNode = nullptr;
-	if (root_) {
-		if (parent == nullptr)
+	if(root_) {
+		if(parent == nullptr)
 			parent = unsafe_find(entry.first).first;
 
 		newNode = new Node(entry, parent);
-		if (entry.first < parent->data_.first)
+		if(entry.first < parent->data_.first)
 			parent->left_ = newNode;
 		else
 			parent->right_ = newNode;
@@ -87,22 +84,21 @@ TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry,
 
 std::pair<TreeMap::Node*, bool> TreeMap::unsafe_find(const K& k) {
 
-	if (!root_)
-		return std::make_pair(nullptr, false);
-	Node* node_ = root_;
-	while (true) {
+	if(!root_) return std::make_pair(nullptr, false);
+	Node* node = root_;
+	while(true) {
+		
+		if(k == node->data_.first)
+			return std::make_pair(node, true);
 
-		if (k == node_->data_.first)
-			return std::make_pair(node_, true);
-
-		if (k <= node_->data_.first) {
-			if (!node_->left_)
-				return std::make_pair(node_, false);
-			node_ = node_->left_;
+		if(k <= node->data_.first) {
+			if(!node->left_)
+				return std::make_pair(node, false);
+			node = node->left_;
 		} else {
-			if (!node_->right_)
-				return std::make_pair(node_, false);
-			node_ = node_->right_;
+			if(!node->right_)
+				return std::make_pair(node, false);
+			node = node->right_;
 		}
 	}
 }
@@ -110,15 +106,18 @@ std::pair<TreeMap::Node*, bool> TreeMap::unsafe_find(const K& k) {
 TreeMap::iterator TreeMap::find(const K& k) {
 
 	auto pair = unsafe_find(k);
-	if (pair.second == false)
+	if(pair.second == false)
 		return end();
 
 	return iterator(pair.first, this);
 }
 
+
 TreeMap::const_iterator TreeMap::find(const K& k) const {
 	return const_cast<TreeMap*>(this)->find(k);
 }
+
+
 
 TreeMap::V& TreeMap::operator[](const K& k) {
 	return insert(std::make_pair(k, V())).first->second;
@@ -137,61 +136,53 @@ TreeMap::size_type TreeMap::count(const K& k) const {
 	return find(k) != end();
 }
 
-bool TreeMap::isLeaf(TreeNode* node_) {
-	return node_->left_ == nullptr && node_->right_ == nullptr;
+bool isLeaf(TreeNode* node) {
+	return node->left_ == nullptr && node->right_ == nullptr;
 }
 
-TreeMap::Node** TreeMap::pointerFromParent(Node* node_) {
+TreeMap::Node** TreeMap::pointerFromParent(Node* node) {
 
-	Node* parent = node_->parent_;
-	if (parent->right_ == node_)
-		return &parent->right_;
-	if (parent->left_ == node_)
-		return &parent->left_;
+	Node* parent = node->parent_;
+	if(parent->right_ == node) return &parent->right_;
+	if(parent->left_ == node) return &parent->left_;
 	return &parent->parent_;
 }
 
-TreeMap::Node* TreeMap::getAnOnlyChild(Node* node_) {
+TreeMap::Node* TreeMap::getAnOnlyChild(Node* node) {
 
-	if (node_->right_ && !node_->left_)
-		return node_->right_;
-	if (node_->left_ && !node_->right_)
-		return node_->left_;
+	if(node->right_ && !node->left_) return node->right_;
+	if(node->left_ && !node->right_) return node->left_;
 	return nullptr;
 }
 
-bool TreeMap::hasTwoChildren(Node* node_) {
-	return node_->left_ && node_->right_;
+bool TreeMap::hasTwoChildren(Node* node) {
+	return node->left_ && node->right_;
 }
 
 TreeMap::iterator TreeMap::erase(TreeMap::iterator i) {
 
-	if (i == end())
-		return i;
+	if(i == end()) return i;
 
-	Node* node_ = (i++).node_;
-	if (hasTwoChildren(node_)) {
+	Node* node = (i++).node_;
+	if(hasTwoChildren(node)) {
 
-		node_->data_ = *i;
+		node->data_ = *i;
 		erase(i);
 
 	} else {
 
-		if (isLeaf(node_)) {
-			if (node_ == root_)
-				root_ = nullptr;
-			else
-				*pointerFromParent(node_) = nullptr;
-		} else {
-			Node* ptrToChild = getAnOnlyChild(node_);
-			if (node_ == root_)
-				root_ = ptrToChild;
-			else
-				*pointerFromParent(node_) = ptrToChild;
-			ptrToChild->parent_ = node_->parent_;
+		if(isLeaf(node)) {
+			if(node == root_) root_ = nullptr;
+			else *pointerFromParent(node) = nullptr;
+		}
+		else {
+			Node* ptrToChild = getAnOnlyChild(node);
+			if(node == root_) root_ = ptrToChild;
+			else *pointerFromParent(node) = ptrToChild;
+			ptrToChild->parent_ = node->parent_;
 		}
 		--size_;
-		delete node_;
+		delete node;
 	}
 	return i;
 }
@@ -199,18 +190,19 @@ TreeMap::iterator TreeMap::erase(TreeMap::iterator i) {
 TreeMap::size_type TreeMap::erase(const K& k) {
 
 	auto it = find(k);
-	if (it == end())
-		return 0;
+	if(it == end()) return 0;
 	erase(it);
 	return 1;
 }
 
 TreeMap::iterator TreeMap::erase(TreeMap::iterator f, TreeMap::iterator l) {
 
-	while (f != l && f != end())
+	while(f != l && f != end())
 		f = erase(f);
 	return f;
 }
+
+
 
 void TreeMap::clear() {
 	erase(begin(), end());
@@ -229,7 +221,7 @@ bool TreeMap::struct_eq(const TreeMap& that) const {
 	iterator thisIt = begin();
 	iterator thatIt = that.begin();
 
-	while (true) {
+	while(true)	{
 
 		// if both maps end then they are equal
 		if (thisIt == end() && thatIt == that.end())
@@ -261,7 +253,7 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 	iterator thisIt = begin();
 	iterator thatIt = that.begin();
 
-	while (true) {
+	while(true)	{
 
 		// if both maps end then they are equal
 		if (thisIt == end() && thatIt == that.end())
@@ -273,7 +265,7 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 
 		//	Checks whether the same pairs exist in both maps
 		auto it = that.find(thisIt->first);
-		if (it != that.end() && thisIt->second != it->second)
+		if(it != that.end() && thisIt->second != it->second)
 			return false;
 
 		++thisIt;
@@ -281,81 +273,47 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 	}
 }
 
-TreeMap::Node* TreeMap::smallest_descendant(Node* node) {
-
-	while (node->left_)
-		node = node->left_;
-	return node;
-}
-
-TreeMap::Node* TreeMap::greatest_descendant(Node* node) {
-
-	while (node->right_)
-		node = node->right_;
-	return node;
-}
-
-TreeMap::Node* TreeMap::const_iterator::smaller_ancestor() {
-
-	Node* node = node_;
-	while (node->parent_ && node->parent_->left_ == node)
-		node = node->parent_;
-
-	return node->parent_;
-}
-
-TreeMap::Node* TreeMap::const_iterator::greater_ancestor() {
-
-	Node* node = node_;
-	while (node->parent_ && node->parent_->right_ == node)
-		node = node->parent_;
-
-	return node->parent_;
-}
-
 // preincrement
-TreeMap::const_iterator& TreeMap::const_iterator::operator ++() {
+TreeMap::const_iterator& TreeMap::const_iterator::operator++() {
 
-	if (!node_) return *this;
+	if(node_ == nullptr)
+		return *this;
 
-	if (node_->right_)
+	if(node_->right_)
 		node_ = smallest_descendant(node_->right_);
-	else {
-		last_ = node_;
+	else
 		node_ = greater_ancestor();
-		if (node_)
-			last_ = node_;
-	}
-	return *this;
-}
-
-// predecrement
-TreeMap::const_iterator& TreeMap::const_iterator::operator--() {
-	if (node_) {
-		if (node_->left_) {
-			node_ = greatest_descendant(node_->left_);
-		} else {
-			node_ = smaller_ancestor();
-		}
-	} else {
-		node_ = last_;
-	}
 	return *this;
 }
 
 // postincrement
 TreeMap::const_iterator TreeMap::const_iterator::operator++(int) {
-	///@todo Implement this
-	const_iterator temp = *this;
-	++*this;
-	return temp;
+	const_iterator tmp = *this;
+	++(*this);
+	return tmp;
+}
+
+// predecrement
+TreeMap::const_iterator& TreeMap::const_iterator::operator--() {
+
+	if(!node_)
+		if(!tree_->empty())
+			node_ = TreeMap::greatest_descendant(tree_->root_);
+		else return *this;
+	else if(node_->left_)
+		node_ = greatest_descendant(node_->left_);
+	else {
+		Node* tmp_node = smaller_ancestor();
+		node_ = tmp_node ? tmp_node : node_ ;
+	}
+	return *this;
 }
 
 // postdecrement
 TreeMap::const_iterator TreeMap::const_iterator::operator--(int) {
-	const_iterator temp = *this;
-	--*this;
-	return temp;
+	const_iterator tmp = *this;
+	--(*this);
+	return tmp;
 }
 
 TreeMap& TreeMap::operator=(const TreeMap& other) {
@@ -365,8 +323,7 @@ TreeMap& TreeMap::operator=(const TreeMap& other) {
 
 TreeMap::iterator TreeMap::begin() {
 
-	if (empty())
-		return end();
+	if(empty()) return end();
 	return iterator(smallest_descendant(root_), this);
 }
 
@@ -380,4 +337,51 @@ TreeMap::iterator TreeMap::end() {
 
 TreeMap::const_iterator TreeMap::end() const {
 	return const_cast<TreeMap*>(this)->end();
+}
+
+TreeMap::Node* TreeMap::smallest_descendant(Node* node) {
+
+	while(node->left_)
+		node = node->left_;
+	return node;
+}
+
+TreeMap::Node* TreeMap::greatest_descendant(Node* node) {
+
+	while(node->right_)
+		node = node->right_;
+	return node;
+}
+
+TreeMap::Node* TreeMap::const_iterator::smaller_ancestor() {
+
+	if(!node_ || node_ == tree_->root_)
+		return nullptr;
+
+	Node* node = node_;
+	while(node->parent_ && node->parent_->left_ == node)
+		node = node->parent_;
+
+	return node && node->parent_ ? node->parent_ : nullptr;
+}
+
+TreeMap::Node* TreeMap::const_iterator::greater_ancestor() {
+
+	if(!node_ || node_ == tree_->root_)
+		return nullptr;
+
+	Node* node = node_;
+	while(node->parent_ && node->parent_->right_ == node)
+		node = node->parent_;
+
+	return node && node->parent_ ? node->parent_ : nullptr;
+}
+
+void TreeMap::copyNode(Node* node) {
+
+	if(!node) return;
+
+	insert(node->data_);
+	copyNode(node->left_);
+	copyNode(node->right_);
 }

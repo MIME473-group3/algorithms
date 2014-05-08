@@ -42,10 +42,7 @@ private:
 	}
 	~CCount() {
 		assert(count > 0);
-		//if(count>0)
 		count--;
-		//else
-		//   cerr<<"ERROR (CCount): More destructors than constructors called!"<<std::endl;
 	}
 	friend struct TreeNode;
 
@@ -148,11 +145,11 @@ public:
 		const_iterator operator--(int);
 
 		inline bool operator==(const const_iterator& a) const {
-			return node_ == a.node_;
+			return (tree_ == a.tree_) && (node_ == a.node_);
 		}
 
 		inline bool operator!=(const const_iterator& a) const {
-			return node_ != a.node_;
+			return (tree_ != a.tree_) || (node_ != a.node_);
 		}
 
 		Node* smaller_ancestor();
@@ -296,7 +293,7 @@ public:
 	static Node* smallest_descendant(Node* node);
 	static Node* greatest_descendant(Node* node);
 
-	static TreeNode* last_;
+	static Node* last_;
 	void copyNode(Node* node);
 };
 
