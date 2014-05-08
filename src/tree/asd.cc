@@ -39,7 +39,7 @@ TreeMap::TreeMap() : size_(0), root_(nullptr) {}
 
 TreeMap::TreeMap(const TreeMap& m) : size_(0), root_(nullptr) {
 
-	copyNode(m.root_);
+	*this = m;
 }
 
 TreeMap::~TreeMap() {
@@ -222,6 +222,10 @@ bool TreeMap::struct_eq(const TreeMap& that) const {
 	if (empty() && that.empty())
 		return true;
 
+	// Size differs
+	if(size() != that.size())
+		return false;
+
 	//	One of them is empty
 	if (empty() || that.empty())
 		return false;
@@ -254,6 +258,10 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 	if (empty() && that.empty())
 		return true;
 
+	// Size differs
+	if(size() != that.size())
+		return false;
+
 	//	One of them is empty
 	if (empty() || that.empty())
 		return false;
@@ -272,8 +280,7 @@ bool TreeMap::info_eq(const TreeMap& that) const {
 			return false;
 
 		//	Checks whether the same pairs exist in both maps
-		auto it = that.find(thisIt->first);
-		if (it != that.end() && thisIt->second != it->second)
+		if (that.find(thisIt->first) == that.end())
 			return false;
 
 		++thisIt;
@@ -365,8 +372,7 @@ TreeMap& TreeMap::operator=(const TreeMap& other) {
 
 TreeMap::iterator TreeMap::begin() {
 
-	if (empty())
-		return end();
+	if (!root_)	return end();
 	return iterator(smallest_descendant(root_), this);
 }
 
