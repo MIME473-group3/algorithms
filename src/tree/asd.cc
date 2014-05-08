@@ -35,6 +35,13 @@
 int CCount::count = 0;
 TreeMap::Node* TreeMap::last_ = nullptr;
 
+#define PROVE 0
+//#define PROVE 1
+
+#if PROVE
+#include <iostream>
+#endif
+
 TreeMap::TreeMap() : size_(0), root_(nullptr) {}
 
 TreeMap::TreeMap(const TreeMap& m) : size_(0), root_(nullptr) {
@@ -67,7 +74,9 @@ std::pair<TreeMap::iterator, bool> TreeMap::insert(
 
 TreeMap::iterator TreeMap::unsafe_insert(const std::pair<K, V>& entry,
 		Node* parent) {
-
+#if PROVE
+	std::cout << "inserting " << entry.first << " " << entry.second << std::endl;
+#endif
 	Node* newNode = nullptr;
 	if (root_) {
 		if (parent == nullptr)
@@ -109,7 +118,12 @@ std::pair<TreeMap::Node*, bool> TreeMap::unsafe_find(const K& k) {
 
 TreeMap::iterator TreeMap::find(const K& k) {
 
+
 	auto pair = unsafe_find(k);
+#if PROVE
+	std::cout << "looking for " << k;// << " " << entry.second << std::endl;
+	std::cout << (pair.second ? " found" : " didn't find") << std::endl;
+#endif
 	if (pair.second == false)
 		return end();
 
@@ -352,7 +366,6 @@ TreeMap::const_iterator& TreeMap::const_iterator::operator--() {
 
 // postincrement
 TreeMap::const_iterator TreeMap::const_iterator::operator++(int) {
-	///@todo Implement this
 	const_iterator temp = *this;
 	++*this;
 	return temp;
