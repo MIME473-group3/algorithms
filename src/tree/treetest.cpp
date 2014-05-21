@@ -39,8 +39,8 @@ public:
 TEST_F(BasicTest, InsertTest) {
 
 	TreeMap map;
-	std::pair<TreeMap::iterator, bool> result;
-	result = map.insert(std::make_pair(1, "a"));
+//	std::pair<TreeMap::iterator, bool> result;
+	auto result = map.insert(std::make_pair(1, "a"));
 	EXPECT_TRUE(result.second);
 	EXPECT_EQ(result.first->first, 1);
 	EXPECT_EQ(result.first->second, "a");
