@@ -30,6 +30,13 @@ public:
   const int seed_;
   const int size_;
   std::vector<int> randomVec;
+
+  void print() {
+	  for(const auto& el : randomVec) {
+		  cout << el << " ";
+	  }
+	  cout << endl;
+  }
 };
 
 TEST_F(SortTest, Bubble) {
@@ -65,6 +72,14 @@ TEST_F(SortTest, Quick) {
 TEST_F(SortTest, Heap) {
   HeapSort(randomVec);
   ASSERT_SORTED(randomVec);
+}
+
+TEST_F(SortTest, Count) {
+	print();
+function<int(const int&)> fun = [](const int& t) {return static_cast<int>(t);};
+  CountSort(randomVec, fun);
+  ASSERT_SORTED(randomVec);
+  print();
 }
 
 //Count
