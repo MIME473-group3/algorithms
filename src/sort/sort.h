@@ -44,7 +44,6 @@ void BubbleSort(std::vector<T>& vec) {
 		}
 	}
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void SelectionSort(std::vector<T>& vec) {
@@ -61,7 +60,6 @@ void SelectionSort(std::vector<T>& vec) {
 		swap(vec[i], vec[min]);
 	}
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void InsertionSort(std::vector<T>& vec, int inc = 1) {
@@ -81,7 +79,6 @@ void InsertionSort(std::vector<T>& vec, int inc = 1) {
 		vec[j] = tmp;
 	}
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void ShellSort(std::vector<T>& vec,
@@ -96,7 +93,6 @@ void ShellSort(std::vector<T>& vec,
 		InsertionSort(vec, *inc++);
 	}
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void MergeSort(std::vector<T>& vec) {
@@ -108,13 +104,11 @@ template<class T, template<class > class compare = std::less>
 void QuickSort(std::vector<T>& vec) {
 	auto comp = compare<T>();
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void HeapSort(std::vector<T>& vec) {
 	auto comp = compare<T>();
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void CountSort(std::vector<T>& vec, function<int(const T&)> mapping) {
@@ -129,18 +123,19 @@ void CountSort(std::vector<T>& vec, function<int(const T&)> mapping) {
 		countVec[mapping(*it++) - min] += 1;
 	}
 
-	print(countVec);
 	for (int i = 1; i < countVec.size(); ++i) {
 		countVec[i] += countVec[i - 1];
 	}
-	print(countVec);
+	for(int i = countVec.size() - 1; i > 0; --i) {
+		countVec[i] = countVec[i - 1];
+	}
+	countVec[0] = 0;
 
 	std::vector<T> sortedVec(vec.size());
 	it = begin(vec);
 	while (it != endIt) {
 		int index = mapping(*it) - min;
 		sortedVec[(countVec[index])++] = *(it++);
-		print(sortedVec);
 	}
 
 	vec = sortedVec;
@@ -150,12 +145,10 @@ template<class T, template<class > class compare = std::less>
 void BucketSort(std::vector<T>& vec) {
 	auto comp = compare<T>();
 }
-;
 
 template<class T, template<class > class compare = std::less>
 void RadixSort(std::vector<T>& vec) {
 	auto comp = compare<T>();
 }
-;
 
 #endif /* SORT_H_ */
