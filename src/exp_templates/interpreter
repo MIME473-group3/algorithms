@@ -1,0 +1,1492 @@
+	.file	"interpreter.cpp"
+	.intel_syntax noprefix
+# GNU C++ (Ubuntu/Linaro 4.8.1-10ubuntu9) version 4.8.1 (x86_64-linux-gnu)
+#	compiled by GNU C version 4.8.1, GMP version 5.1.2, MPFR version 3.1.1-p2, MPC version 1.0.1
+# GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+# options passed:  -imultiarch x86_64-linux-gnu -D_GNU_SOURCE
+# interpreter.cpp -masm=intel -mtune=generic -march=x86-64
+# -auxbase-strip interpreter -O3 -std=c++11 -fverbose-asm -fstack-protector
+# -Wformat -Wformat-security
+# options enabled:  -faggressive-loop-optimizations
+# -fasynchronous-unwind-tables -fauto-inc-dec -fbranch-count-reg
+# -fcaller-saves -fcombine-stack-adjustments -fcommon -fcompare-elim
+# -fcprop-registers -fcrossjumping -fcse-follow-jumps -fdefer-pop
+# -fdelete-null-pointer-checks -fdevirtualize -fdwarf2-cfi-asm
+# -fearly-inlining -feliminate-unused-debug-types -fexceptions
+# -fexpensive-optimizations -fforward-propagate -ffunction-cse -fgcse
+# -fgcse-after-reload -fgcse-lm -fgnu-runtime -fguess-branch-probability
+# -fhoist-adjacent-loads -fident -fif-conversion -fif-conversion2
+# -findirect-inlining -finline -finline-atomics -finline-functions
+# -finline-functions-called-once -finline-small-functions -fipa-cp
+# -fipa-cp-clone -fipa-profile -fipa-pure-const -fipa-reference -fipa-sra
+# -fira-hoist-pressure -fira-share-save-slots -fira-share-spill-slots
+# -fivopts -fkeep-static-consts -fleading-underscore -fmath-errno
+# -fmerge-constants -fmerge-debug-strings -fmove-loop-invariants
+# -fomit-frame-pointer -foptimize-register-move -foptimize-sibling-calls
+# -foptimize-strlen -fpartial-inlining -fpeephole -fpeephole2
+# -fpredictive-commoning -fprefetch-loop-arrays -free -freg-struct-return
+# -fregmove -freorder-blocks -freorder-functions -frerun-cse-after-loop
+# -fsched-critical-path-heuristic -fsched-dep-count-heuristic
+# -fsched-group-heuristic -fsched-interblock -fsched-last-insn-heuristic
+# -fsched-rank-heuristic -fsched-spec -fsched-spec-insn-heuristic
+# -fsched-stalled-insns-dep -fschedule-insns2 -fshow-column -fshrink-wrap
+# -fsigned-zeros -fsplit-ivs-in-unroller -fsplit-wide-types
+# -fstack-protector -fstrict-aliasing -fstrict-overflow
+# -fstrict-volatile-bitfields -fsync-libcalls -fthread-jumps
+# -ftoplevel-reorder -ftrapping-math -ftree-bit-ccp -ftree-builtin-call-dce
+# -ftree-ccp -ftree-ch -ftree-coalesce-vars -ftree-copy-prop
+# -ftree-copyrename -ftree-cselim -ftree-dce -ftree-dominator-opts
+# -ftree-dse -ftree-forwprop -ftree-fre -ftree-loop-distribute-patterns
+# -ftree-loop-if-convert -ftree-loop-im -ftree-loop-ivcanon
+# -ftree-loop-optimize -ftree-parallelize-loops= -ftree-partial-pre
+# -ftree-phiprop -ftree-pre -ftree-pta -ftree-reassoc -ftree-scev-cprop
+# -ftree-sink -ftree-slp-vectorize -ftree-slsr -ftree-sra
+# -ftree-switch-conversion -ftree-tail-merge -ftree-ter
+# -ftree-vect-loop-version -ftree-vectorize -ftree-vrp -funit-at-a-time
+# -funswitch-loops -funwind-tables -fvect-cost-model -fverbose-asm
+# -fzero-initialized-in-bss -m128bit-long-double -m64 -m80387
+# -maccumulate-outgoing-args -malign-stringops -mfancy-math-387
+# -mfp-ret-in-387 -mfxsr -mglibc -mieee-fp -mlong-double-80 -mmmx -mno-sse4
+# -mpush-args -mred-zone -msse -msse2 -mtls-direct-seg-refs
+
+	.section	.text._ZN12AbstractExprD2Ev,"axG",@progbits,_ZN12AbstractExprD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN12AbstractExprD2Ev
+	.type	_ZN12AbstractExprD2Ev, @function
+_ZN12AbstractExprD2Ev:
+.LFB1076:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# this_2(D)->_vptr.AbstractExpr,
+	ret
+	.cfi_endproc
+.LFE1076:
+	.size	_ZN12AbstractExprD2Ev, .-_ZN12AbstractExprD2Ev
+	.weak	_ZN12AbstractExprD1Ev
+	.set	_ZN12AbstractExprD1Ev,_ZN12AbstractExprD2Ev
+	.section	.text._ZN12TerminalExprD2Ev,"axG",@progbits,_ZN12TerminalExprD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN12TerminalExprD2Ev
+	.type	_ZN12TerminalExprD2Ev, @function
+_ZN12TerminalExprD2Ev:
+.LFB1082:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	ret
+	.cfi_endproc
+.LFE1082:
+	.size	_ZN12TerminalExprD2Ev, .-_ZN12TerminalExprD2Ev
+	.weak	_ZN12TerminalExprD1Ev
+	.set	_ZN12TerminalExprD1Ev,_ZN12TerminalExprD2Ev
+	.section	.text._ZNK7Literal4evalEv,"axG",@progbits,_ZNK7Literal4evalEv,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNK7Literal4evalEv
+	.type	_ZNK7Literal4evalEv, @function
+_ZNK7Literal4evalEv:
+.LFB1087:
+	.cfi_startproc
+	movsd	xmm0, QWORD PTR [rdi+8]	# this_2(D)->c_, this_2(D)->c_
+	ret
+	.cfi_endproc
+.LFE1087:
+	.size	_ZNK7Literal4evalEv, .-_ZNK7Literal4evalEv
+	.section	.text._ZNK8Variable4evalEv,"axG",@progbits,_ZNK8Variable4evalEv,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNK8Variable4evalEv
+	.type	_ZNK8Variable4evalEv, @function
+_ZNK8Variable4evalEv:
+.LFB1091:
+	.cfi_startproc
+	mov	rax, QWORD PTR [rdi+8]	# this_2(D)->v_, this_2(D)->v_
+	movsd	xmm0, QWORD PTR [rax]	# *_3, *_3
+	ret
+	.cfi_endproc
+.LFE1091:
+	.size	_ZNK8Variable4evalEv, .-_ZNK8Variable4evalEv
+	.section	.text._ZN15NonTerminalExprD2Ev,"axG",@progbits,_ZN15NonTerminalExprD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN15NonTerminalExprD2Ev
+	.type	_ZN15NonTerminalExprD2Ev, @function
+_ZN15NonTerminalExprD2Ev:
+.LFB1097:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	ret
+	.cfi_endproc
+.LFE1097:
+	.size	_ZN15NonTerminalExprD2Ev, .-_ZN15NonTerminalExprD2Ev
+	.weak	_ZN15NonTerminalExprD1Ev
+	.set	_ZN15NonTerminalExprD1Ev,_ZN15NonTerminalExprD2Ev
+	.section	.text._ZN9UnaryExprD2Ev,"axG",@progbits,_ZN9UnaryExprD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN9UnaryExprD2Ev
+	.type	_ZN9UnaryExprD2Ev, @function
+_ZN9UnaryExprD2Ev:
+.LFB1103:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV9UnaryExpr+16	# this_3(D)->D.22838.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48702, this_3(D)->e_
+	test	rdi, rdi	# D.48702
+	je	.L7	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_6 + 16B]
+.L7:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_3(D)]._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1103:
+	.size	_ZN9UnaryExprD2Ev, .-_ZN9UnaryExprD2Ev
+	.weak	_ZN9UnaryExprD1Ev
+	.set	_ZN9UnaryExprD1Ev,_ZN9UnaryExprD2Ev
+	.section	.text._ZN10BinaryExprD2Ev,"axG",@progbits,_ZN10BinaryExprD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN10BinaryExprD2Ev
+	.type	_ZN10BinaryExprD2Ev, @function
+_ZN10BinaryExprD2Ev:
+.LFB1114:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# this_4(D)->D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48711, this_4(D)->e1_
+	test	rdi, rdi	# D.48711
+	je	.L14	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_7 + 16B]
+.L14:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48711, this_4(D)->e2_
+	test	rdi, rdi	# D.48711
+	je	.L15	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_10]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_10]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_11 + 16B]
+.L15:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_4(D)]._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1114:
+	.size	_ZN10BinaryExprD2Ev, .-_ZN10BinaryExprD2Ev
+	.weak	_ZN10BinaryExprD1Ev
+	.set	_ZN10BinaryExprD1Ev,_ZN10BinaryExprD2Ev
+	.section	.text._ZNK7Product4evalEv,"axG",@progbits,_ZNK7Product4evalEv,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNK7Product4evalEv
+	.type	_ZNK7Product4evalEv, @function
+_ZNK7Product4evalEv:
+.LFB1120:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	sub	rsp, 16	#,
+	.cfi_def_cfa_offset 32
+	mov	rdi, QWORD PTR [rdi+8]	# D.48716, this_2(D)->D.23004.e1_
+	mov	rax, QWORD PTR [rdi]	# _3->_vptr.AbstractExpr, _3->_vptr.AbstractExpr
+	call	[QWORD PTR [rax]]	# *_4
+	mov	rdi, QWORD PTR [rbx+16]	# D.48716, this_2(D)->D.23004.e2_
+	movsd	QWORD PTR [rsp+8], xmm0	# %sfp,
+	mov	rax, QWORD PTR [rdi]	# _8->_vptr.AbstractExpr, _8->_vptr.AbstractExpr
+	call	[QWORD PTR [rax]]	# *_9
+	mulsd	xmm0, QWORD PTR [rsp+8]	# D.48719, %sfp
+	add	rsp, 16	#,
+	.cfi_def_cfa_offset 16
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1120:
+	.size	_ZNK7Product4evalEv, .-_ZNK7Product4evalEv
+	.section	.text._ZNK3Sum4evalEv,"axG",@progbits,_ZNK3Sum4evalEv,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNK3Sum4evalEv
+	.type	_ZNK3Sum4evalEv, @function
+_ZNK3Sum4evalEv:
+.LFB1128:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	sub	rsp, 16	#,
+	.cfi_def_cfa_offset 32
+	mov	rdi, QWORD PTR [rdi+8]	# D.48723, this_2(D)->D.23114.e1_
+	mov	rax, QWORD PTR [rdi]	# _3->_vptr.AbstractExpr, _3->_vptr.AbstractExpr
+	call	[QWORD PTR [rax]]	# *_4
+	mov	rdi, QWORD PTR [rbx+16]	# D.48723, this_2(D)->D.23114.e2_
+	movsd	QWORD PTR [rsp+8], xmm0	# %sfp,
+	mov	rax, QWORD PTR [rdi]	# _8->_vptr.AbstractExpr, _8->_vptr.AbstractExpr
+	call	[QWORD PTR [rax]]	# *_9
+	addsd	xmm0, QWORD PTR [rsp+8]	# D.48726, %sfp
+	add	rsp, 16	#,
+	.cfi_def_cfa_offset 16
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1128:
+	.size	_ZNK3Sum4evalEv, .-_ZNK3Sum4evalEv
+	.text
+	.align 2
+	.p2align 4,,15
+	.type	_ZZ4mainENKUlvE_clEv, @function
+_ZZ4mainENKUlvE_clEv:
+.LFB2165:
+	.cfi_startproc
+	push	rbp	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	mov	rbp, rdi	# __closure, __closure
+	push	rbx	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	mov	ebx, 10000	# D.48735,
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 32
+	.p2align 4,,10
+	.p2align 3
+.L29:
+	mov	rdi, QWORD PTR [rbp+0]	# D.48736, __closure_4(D)->__result
+	mov	rdx, QWORD PTR [rdi]	# _5->_vptr.AbstractExpr, _5->_vptr.AbstractExpr
+	call	[QWORD PTR [rdx]]	# *_6
+	sub	ebx, 1	# D.48735,
+	jne	.L29	#,
+	mov	rdi, QWORD PTR [rbp+0]	# D.48736, __closure_4(D)->__result
+	mov	rax, QWORD PTR [rdi]	# _10->_vptr.AbstractExpr, _10->_vptr.AbstractExpr
+	mov	rax, QWORD PTR [rax]	# *_11, *_11
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 24
+	pop	rbx	#
+	.cfi_def_cfa_offset 16
+	pop	rbp	#
+	.cfi_def_cfa_offset 8
+	jmp	rax	# *_11
+	.cfi_endproc
+.LFE2165:
+	.size	_ZZ4mainENKUlvE_clEv, .-_ZZ4mainENKUlvE_clEv
+	.section	.text._ZN7SigmoidD2Ev,"axG",@progbits,_ZN7SigmoidD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7SigmoidD2Ev
+	.type	_ZN7SigmoidD2Ev, @function
+_ZN7SigmoidD2Ev:
+.LFB2426:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV9UnaryExpr+16	# MEM[(struct UnaryExpr *)this_2(D)].D.22838.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48742, MEM[(struct UnaryExpr *)this_2(D)].e_
+	test	rdi, rdi	# D.48742
+	je	.L32	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_6 + 16B]
+.L32:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE2426:
+	.size	_ZN7SigmoidD2Ev, .-_ZN7SigmoidD2Ev
+	.weak	_ZN7SigmoidD1Ev
+	.set	_ZN7SigmoidD1Ev,_ZN7SigmoidD2Ev
+	.section	.text._ZN8VariableD2Ev,"axG",@progbits,_ZN8VariableD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN8VariableD2Ev
+	.type	_ZN8VariableD2Ev, @function
+_ZN8VariableD2Ev:
+.LFB2430:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	ret
+	.cfi_endproc
+.LFE2430:
+	.size	_ZN8VariableD2Ev, .-_ZN8VariableD2Ev
+	.weak	_ZN8VariableD1Ev
+	.set	_ZN8VariableD1Ev,_ZN8VariableD2Ev
+	.section	.text._ZN7LiteralD2Ev,"axG",@progbits,_ZN7LiteralD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7LiteralD2Ev
+	.type	_ZN7LiteralD2Ev, @function
+_ZN7LiteralD2Ev:
+.LFB2434:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	ret
+	.cfi_endproc
+.LFE2434:
+	.size	_ZN7LiteralD2Ev, .-_ZN7LiteralD2Ev
+	.weak	_ZN7LiteralD1Ev
+	.set	_ZN7LiteralD1Ev,_ZN7LiteralD2Ev
+	.section	.text._ZN12AbstractExprD0Ev,"axG",@progbits,_ZN12AbstractExprD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN12AbstractExprD0Ev
+	.type	_ZN12AbstractExprD0Ev, @function
+_ZN12AbstractExprD0Ev:
+.LFB1078:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# this_2(D)->_vptr.AbstractExpr,
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE1078:
+	.size	_ZN12AbstractExprD0Ev, .-_ZN12AbstractExprD0Ev
+	.section	.text._ZN12TerminalExprD0Ev,"axG",@progbits,_ZN12TerminalExprD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN12TerminalExprD0Ev
+	.type	_ZN12TerminalExprD0Ev, @function
+_ZN12TerminalExprD0Ev:
+.LFB1084:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE1084:
+	.size	_ZN12TerminalExprD0Ev, .-_ZN12TerminalExprD0Ev
+	.section	.text._ZN15NonTerminalExprD0Ev,"axG",@progbits,_ZN15NonTerminalExprD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN15NonTerminalExprD0Ev
+	.type	_ZN15NonTerminalExprD0Ev, @function
+_ZN15NonTerminalExprD0Ev:
+.LFB1099:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE1099:
+	.size	_ZN15NonTerminalExprD0Ev, .-_ZN15NonTerminalExprD0Ev
+	.section	.text._ZN9UnaryExprD0Ev,"axG",@progbits,_ZN9UnaryExprD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN9UnaryExprD0Ev
+	.type	_ZN9UnaryExprD0Ev, @function
+_ZN9UnaryExprD0Ev:
+.LFB1105:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV9UnaryExpr+16	# this_2(D)->D.22838.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48757, this_2(D)->e_
+	test	rdi, rdi	# D.48757
+	je	.L43	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_6 + 16B]
+.L43:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	mov	rdi, rbx	#, this
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE1105:
+	.size	_ZN9UnaryExprD0Ev, .-_ZN9UnaryExprD0Ev
+	.section	.text._ZN7SigmoidD0Ev,"axG",@progbits,_ZN7SigmoidD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7SigmoidD0Ev
+	.type	_ZN7SigmoidD0Ev, @function
+_ZN7SigmoidD0Ev:
+.LFB2428:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV9UnaryExpr+16	# MEM[(struct UnaryExpr *)this_2(D)].D.22838.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48762, MEM[(struct UnaryExpr *)this_2(D)].e_
+	test	rdi, rdi	# D.48762
+	je	.L49	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_6 + 16B]
+.L49:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	mov	rdi, rbx	#, this
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE2428:
+	.size	_ZN7SigmoidD0Ev, .-_ZN7SigmoidD0Ev
+	.section	.text._ZN8VariableD0Ev,"axG",@progbits,_ZN8VariableD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN8VariableD0Ev
+	.type	_ZN8VariableD0Ev, @function
+_ZN8VariableD0Ev:
+.LFB2432:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE2432:
+	.size	_ZN8VariableD0Ev, .-_ZN8VariableD0Ev
+	.section	.text._ZN7LiteralD0Ev,"axG",@progbits,_ZN7LiteralD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7LiteralD0Ev
+	.type	_ZN7LiteralD0Ev, @function
+_ZN7LiteralD0Ev:
+.LFB2436:
+	.cfi_startproc
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE2436:
+	.size	_ZN7LiteralD0Ev, .-_ZN7LiteralD0Ev
+	.section	.text._ZNK7Sigmoid4evalEv,"axG",@progbits,_ZNK7Sigmoid4evalEv,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZNK7Sigmoid4evalEv
+	.type	_ZNK7Sigmoid4evalEv, @function
+_ZNK7Sigmoid4evalEv:
+.LFB1109:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rdi, QWORD PTR [rdi+8]	# D.48771, this_2(D)->D.22910.e_
+	mov	rax, QWORD PTR [rdi]	# _3->_vptr.AbstractExpr, _3->_vptr.AbstractExpr
+	call	[QWORD PTR [rax]]	# *_4
+	movsd	xmm1, QWORD PTR .LC0[rip]	# tmp72,
+	xorpd	xmm0, xmm1	# D.48774, tmp72
+	call	exp	#
+	movsd	xmm1, QWORD PTR .LC1[rip]	# tmp75,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	addsd	xmm0, xmm1	# D.48774, tmp75
+	divsd	xmm1, xmm0	# D.48774, D.48774
+	movapd	xmm0, xmm1	# D.48774, D.48774
+	ret
+	.cfi_endproc
+.LFE1109:
+	.size	_ZNK7Sigmoid4evalEv, .-_ZNK7Sigmoid4evalEv
+	.section	.text.unlikely,"ax",@progbits
+	.type	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.part.2, @function
+_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.part.2:
+.LFB2441:
+	.cfi_startproc
+	push	rax	#
+	.cfi_def_cfa_offset 16
+	mov	rax, QWORD PTR [rdi]	# __out_1(D)->_vptr.basic_ostream, __out_1(D)->_vptr.basic_ostream
+	add	rdi, QWORD PTR [rax-24]	# D.48780, MEM[(long int *)_2 + -24B]
+	mov	esi, DWORD PTR [rdi+32]	# D.48782, MEM[(const struct basic_ios *)_5 + 32B]
+	or	esi, 1	# D.48782,
+	call	_ZNSt9basic_iosIcSt11char_traitsIcEE5clearESt12_Ios_Iostate	#
+	pop	rdx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE2441:
+	.size	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.part.2, .-_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc.part.2
+	.section	.text._ZN7ProductD2Ev,"axG",@progbits,_ZN7ProductD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7ProductD2Ev
+	.type	_ZN7ProductD2Ev, @function
+_ZN7ProductD2Ev:
+.LFB2422:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# MEM[(struct BinaryExpr *)this_2(D)].D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48786, MEM[(struct BinaryExpr *)this_2(D)].e1_
+	test	rdi, rdi	# D.48786
+	je	.L61	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_7 + 16B]
+.L61:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48786, MEM[(struct BinaryExpr *)this_2(D)].e2_
+	test	rdi, rdi	# D.48786
+	je	.L62	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_9]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_9]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_10 + 16B]
+.L62:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE2422:
+	.size	_ZN7ProductD2Ev, .-_ZN7ProductD2Ev
+	.weak	_ZN7ProductD1Ev
+	.set	_ZN7ProductD1Ev,_ZN7ProductD2Ev
+	.section	.text._ZN3SumD2Ev,"axG",@progbits,_ZN3SumD5Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN3SumD2Ev
+	.type	_ZN3SumD2Ev, @function
+_ZN3SumD2Ev:
+.LFB2414:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# MEM[(struct BinaryExpr *)this_2(D)].D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48792, MEM[(struct BinaryExpr *)this_2(D)].e1_
+	test	rdi, rdi	# D.48792
+	je	.L71	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_6]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_7 + 16B]
+.L71:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48792, MEM[(struct BinaryExpr *)this_2(D)].e2_
+	test	rdi, rdi	# D.48792
+	je	.L72	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_9]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_9]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_10 + 16B]
+.L72:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE2414:
+	.size	_ZN3SumD2Ev, .-_ZN3SumD2Ev
+	.weak	_ZN3SumD1Ev
+	.set	_ZN3SumD1Ev,_ZN3SumD2Ev
+	.section	.text._ZN10BinaryExprD0Ev,"axG",@progbits,_ZN10BinaryExprD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN10BinaryExprD0Ev
+	.type	_ZN10BinaryExprD0Ev, @function
+_ZN10BinaryExprD0Ev:
+.LFB1116:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# this_2(D)->D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48798, this_2(D)->e1_
+	test	rdi, rdi	# D.48798
+	je	.L81	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_5]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_6 + 16B]
+.L81:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48798, this_2(D)->e2_
+	test	rdi, rdi	# D.48798
+	je	.L82	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_9 + 16B]
+.L82:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	mov	rdi, rbx	#, this
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE1116:
+	.size	_ZN10BinaryExprD0Ev, .-_ZN10BinaryExprD0Ev
+	.section	.text._ZN7ProductD0Ev,"axG",@progbits,_ZN7ProductD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN7ProductD0Ev
+	.type	_ZN7ProductD0Ev, @function
+_ZN7ProductD0Ev:
+.LFB2424:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# MEM[(struct BinaryExpr *)this_2(D)].D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48804, MEM[(struct BinaryExpr *)this_2(D)].e1_
+	test	rdi, rdi	# D.48804
+	je	.L91	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_9 + 16B]
+.L91:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48804, MEM[(struct BinaryExpr *)this_2(D)].e2_
+	test	rdi, rdi	# D.48804
+	je	.L92	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_11]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_11]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_12 + 16B]
+.L92:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	mov	rdi, rbx	#, this
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE2424:
+	.size	_ZN7ProductD0Ev, .-_ZN7ProductD0Ev
+	.section	.text._ZN3SumD0Ev,"axG",@progbits,_ZN3SumD0Ev,comdat
+	.align 2
+	.p2align 4,,15
+	.weak	_ZN3SumD0Ev
+	.type	_ZN3SumD0Ev, @function
+_ZN3SumD0Ev:
+.LFB2416:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# this, this
+	mov	QWORD PTR [rdi], OFFSET FLAT:_ZTV10BinaryExpr+16	# MEM[(struct BinaryExpr *)this_2(D)].D.22958.D.22807._vptr.AbstractExpr,
+	mov	rdi, QWORD PTR [rdi+8]	# D.48810, MEM[(struct BinaryExpr *)this_2(D)].e1_
+	test	rdi, rdi	# D.48810
+	je	.L101	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_8]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_9 + 16B]
+.L101:
+	mov	rdi, QWORD PTR [rbx+16]	# D.48810, MEM[(struct BinaryExpr *)this_2(D)].e2_
+	test	rdi, rdi	# D.48810
+	je	.L102	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct AbstractExpr *)_11]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_11]._vptr.AbstractExpr
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_12 + 16B]
+.L102:
+	mov	QWORD PTR [rbx], OFFSET FLAT:_ZTV12AbstractExpr+16	# MEM[(struct AbstractExpr *)this_2(D)]._vptr.AbstractExpr,
+	mov	rdi, rbx	#, this
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZdlPv	#
+	.cfi_endproc
+.LFE2416:
+	.size	_ZN3SumD0Ev, .-_ZN3SumD0Ev
+	.text
+	.p2align 4,,15
+	.globl	_Z8variableRd
+	.type	_Z8variableRd, @function
+_Z8variableRd:
+.LFB1140:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# x, x
+	mov	edi, 16	#,
+	call	_Znwm	#
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV8Variable+16	# MEM[(struct Variable *)_3].D.22778.D.22671._vptr.AbstractExpr,
+	mov	QWORD PTR [rax+8], rbx	# MEM[(struct Variable *)_3].v_, x
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1140:
+	.size	_Z8variableRd, .-_Z8variableRd
+	.p2align 4,,15
+	.globl	_Z7literald
+	.type	_Z7literald, @function
+_Z7literald:
+.LFB1141:
+	.cfi_startproc
+	sub	rsp, 24	#,
+	.cfi_def_cfa_offset 32
+	mov	edi, 16	#,
+	movsd	QWORD PTR [rsp+8], xmm0	# %sfp, c
+	call	_Znwm	#
+	movsd	xmm0, QWORD PTR [rsp+8]	# c, %sfp
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Literal+16	# MEM[(struct Literal *)_3].D.22701.D.22671._vptr.AbstractExpr,
+	movsd	QWORD PTR [rax+8], xmm0	# MEM[(struct Literal *)_3].c_, c
+	add	rsp, 24	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1141:
+	.size	_Z7literald, .-_Z7literald
+	.p2align 4,,15
+	.globl	_Z7sigmoidRK12AbstractExpr
+	.type	_Z7sigmoidRK12AbstractExpr, @function
+_Z7sigmoidRK12AbstractExpr:
+.LFB1142:
+	.cfi_startproc
+	push	rbx	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 3, -16
+	mov	rbx, rdi	# e, e
+	mov	edi, 16	#,
+	call	_Znwm	#
+	mov	QWORD PTR [rax+8], rbx	# MEM[(struct UnaryExpr *)_3].e_, e
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Sigmoid+16	# MEM[(struct Sigmoid *)_3].D.22910.D.22838.D.22807._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE1142:
+	.size	_Z7sigmoidRK12AbstractExpr, .-_Z7sigmoidRK12AbstractExpr
+	.section	.text._ZplI12AbstractExpriERS0_RKT_RKT0_,"axG",@progbits,_ZplI12AbstractExpriERS0_RKT_RKT0_,comdat
+	.p2align 4,,15
+	.weak	_ZplI12AbstractExpriERS0_RKT_RKT0_
+	.type	_ZplI12AbstractExpriERS0_RKT_RKT0_, @function
+_ZplI12AbstractExpriERS0_RKT_RKT0_:
+.LFB2230:
+	.cfi_startproc
+	push	r12	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	mov	r12, rsi	# b, b
+	push	rbp	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	mov	rbp, rdi	# a, a
+	mov	edi, 16	#,
+	push	rbx	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	call	_Znwm	#
+	cvtsi2sd	xmm0, DWORD PTR [r12]	# D.48829, *b_3(D)
+	movsd	QWORD PTR [rax+8], xmm0	# MEM[(struct Literal *)_17].c_, D.48829
+	mov	rbx, rax	# D.48826,
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Literal+16	# MEM[(struct Literal *)_17].D.22701.D.22671._vptr.AbstractExpr,
+	mov	edi, 24	#,
+	call	_Znwm	#
+	mov	QWORD PTR [rax+8], rbp	# MEM[(struct BinaryExpr *)_6].e1_, a
+	mov	QWORD PTR [rax+16], rbx	# MEM[(struct BinaryExpr *)_6].e2_, D.48826
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV3Sum+16	# MEM[(struct Sum *)_6].D.23114.D.22958.D.22807._vptr.AbstractExpr,
+	pop	rbx	#
+	.cfi_def_cfa_offset 24
+	pop	rbp	#
+	.cfi_def_cfa_offset 16
+	pop	r12	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE2230:
+	.size	_ZplI12AbstractExpriERS0_RKT_RKT0_, .-_ZplI12AbstractExpriERS0_RKT_RKT0_
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC2:
+	.string	": "
+.LC4:
+	.string	" ms. Result = "
+	.section	.text._Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_,"axG",@progbits,_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_,comdat
+	.p2align 4,,15
+	.weak	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_
+	.type	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_, @function
+_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_:
+.LFB2262:
+	.cfi_startproc
+	push	r13	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 13, -16
+	push	r12	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 12, -24
+	mov	r12, rdi	# name, name
+	push	rbp	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 6, -32
+	mov	ebp, 10000	# D.48880,
+	push	rbx	#
+	.cfi_def_cfa_offset 40
+	.cfi_offset 3, -40
+	mov	rbx, rsi	# fun, fun
+	sub	rsp, 24	#,
+	.cfi_def_cfa_offset 64
+	call	_ZNSt6chrono3_V212steady_clock3nowEv	#
+	mov	r13, rax	# start,
+	.p2align 4,,10
+	.p2align 3
+.L122:
+	mov	rcx, QWORD PTR [rbx]	# D.48869, MEM[(const struct _Mem_fn *)fun_5(D)].__pmf.__pfn
+	mov	rdi, QWORD PTR [rbx+16]	# D.48870, MEM[(struct AbstractExpr * &)fun_5(D) + 16]
+	add	rdi, QWORD PTR [rbx+8]	# D.48870, MEM[(const struct _Mem_fn *)fun_5(D)].__pmf.__delta
+	test	cl, 1	# D.48869,
+	je	.L120	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(int (*__vtbl_ptr_type) () * *)_51], MEM[(int (*__vtbl_ptr_type) () * *)_51]
+	mov	rcx, QWORD PTR [rax-1+rcx]	# iftmp.12, *_55
+.L120:
+	call	rcx	# iftmp.12
+	sub	ebp, 1	# D.48880,
+	jne	.L122	#,
+	call	_ZNSt6chrono3_V212steady_clock3nowEv	#
+	mov	rbp, rax	# D.48863,
+	mov	rax, QWORD PTR [rbx]	# D.48869, MEM[(const struct _Mem_fn *)fun_5(D)].__pmf.__pfn
+	mov	rdi, QWORD PTR [rbx+16]	# D.48870, MEM[(struct AbstractExpr * &)fun_5(D) + 16]
+	sub	rbp, r13	# D.48863, start
+	add	rdi, QWORD PTR [rbx+8]	# D.48870, MEM[(const struct _Mem_fn *)fun_5(D)].__pmf.__delta
+	test	al, 1	# D.48869,
+	je	.L124	#,
+	mov	rdx, QWORD PTR [rdi]	# MEM[(int (*__vtbl_ptr_type) () * *)_69], MEM[(int (*__vtbl_ptr_type) () * *)_69]
+	mov	rax, QWORD PTR [rdx-1+rax]	# iftmp.12, *_73
+.L124:
+	call	rax	# iftmp.12
+	mov	rsi, QWORD PTR [r12]	# D.48865, MEM[(const struct basic_string *)name_12(D)]._M_dataplus._M_p
+	mov	edi, OFFSET FLAT:_ZSt4cout	#,
+	movsd	QWORD PTR [rsp+8], xmm0	# %sfp, D.48864
+	mov	rdx, QWORD PTR [rsi-24]	# MEM[(struct _Rep *)_33 + -24B].D.22265._M_length, MEM[(struct _Rep *)_33 + -24B].D.22265._M_length
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	mov	edx, 2	#,
+	mov	esi, OFFSET FLAT:.LC2	#,
+	mov	rdi, rax	#, D.48867
+	mov	rbx, rax	# D.48867,
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	cvtsi2sd	xmm0, rbp	# D.48864, D.48863
+	mov	rdi, rbx	#, D.48867
+	divsd	xmm0, QWORD PTR .LC3[rip]	# D.48864,
+	call	_ZNSo9_M_insertIdEERSoT_	#
+	mov	edx, 14	#,
+	mov	esi, OFFSET FLAT:.LC4	#,
+	mov	rdi, rax	#, D.48868
+	mov	rbx, rax	# D.48868,
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	movsd	xmm2, QWORD PTR [rsp+8]	# D.48864, %sfp
+	mov	rdi, rbx	#, D.48868
+	movapd	xmm0, xmm2	#, D.48864
+	call	_ZNSo9_M_insertIdEERSoT_	#
+	mov	rbp, rax	# D.48868,
+	mov	rax, QWORD PTR [rax]	# MEM[(struct basic_ostream *)_38]._vptr.basic_ostream, MEM[(struct basic_ostream *)_38]._vptr.basic_ostream
+	mov	rax, QWORD PTR [rax-24]	# MEM[(long int *)_85 + -24B], MEM[(long int *)_85 + -24B]
+	mov	rbx, QWORD PTR [rbp+240+rax]	# D.48875, MEM[(const struct basic_ios *)_88 + 240B]
+	test	rbx, rbx	# D.48875
+	je	.L129	#,
+	cmp	BYTE PTR [rbx+56], 0	# MEM[(const struct ctype *)_89]._M_widen_ok,
+	je	.L126	#,
+	movzx	eax, BYTE PTR [rbx+67]	# D.48878, MEM[(const struct ctype *)_89]._M_widen
+.L127:
+	mov	rdi, rbp	#, D.48868
+	movsx	esi, al	# D.48876, D.48878
+	call	_ZNSo3putEc	#
+	add	rsp, 24	#,
+	.cfi_remember_state
+	.cfi_def_cfa_offset 40
+	mov	rdi, rax	#, D.48867
+	pop	rbx	#
+	.cfi_def_cfa_offset 32
+	pop	rbp	#
+	.cfi_def_cfa_offset 24
+	pop	r12	#
+	.cfi_def_cfa_offset 16
+	pop	r13	#
+	.cfi_def_cfa_offset 8
+	jmp	_ZNSo5flushEv	#
+.L126:
+	.cfi_restore_state
+	mov	rdi, rbx	#, D.48875
+	call	_ZNKSt5ctypeIcE13_M_widen_initEv	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(const struct ctype *)_89].D.29952._vptr.facet, MEM[(const struct ctype *)_89].D.29952._vptr.facet
+	mov	esi, 10	#,
+	mov	rdi, rbx	#, D.48875
+	call	[QWORD PTR [rax+48]]	# MEM[(int (*__vtbl_ptr_type) () *)_98 + 48B]
+	jmp	.L127	#
+.L129:
+	call	_ZSt16__throw_bad_castv	#
+	.cfi_endproc
+.LFE2262:
+	.size	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_, .-_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_
+	.weak	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEJEEvSsT0_DpT1_
+	.set	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEJEEvSsT0_DpT1_,_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_
+	.section	.rodata.str1.1
+.LC5:
+	.string	"Hello World!"
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC9:
+	.string	"sigmoid((2x + 3) * 0.25 + 1) ="
+	.section	.rodata.str1.1
+.LC10:
+	.string	"x = %.2f: %.4f\n"
+.LC12:
+	.string	"Run-time evaluation"
+	.section	.text.startup,"ax",@progbits
+	.p2align 4,,15
+	.globl	main
+	.type	main, @function
+main:
+.LFB2164:
+	.cfi_startproc
+	.cfi_personality 0x3,__gxx_personality_v0
+	.cfi_lsda 0x3,.LLSDA2164
+	push	r12	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	mov	esi, OFFSET FLAT:.LC5	#,
+	mov	edi, OFFSET FLAT:_ZSt4cout	#,
+	push	rbp	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	push	rbx	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	sub	rsp, 80	#,
+	.cfi_def_cfa_offset 112
+.LEHB0:
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc	#
+	mov	rdi, rax	#, D.48931
+	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_	#
+	mov	edi, 16	#,
+	mov	QWORD PTR [rsp+40], 0	# x,
+	mov	DWORD PTR [rsp+48], 1	# D.41048,
+	mov	DWORD PTR [rsp+32], 3	# D.41043,
+	call	_Znwm	#
+	mov	rbx, rax	# D.48936,
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV8Variable+16	# MEM[(struct Variable *)_77].D.22778.D.22671._vptr.AbstractExpr,
+	lea	rax, [rsp+40]	# tmp115,
+	mov	edi, 16	#,
+	mov	QWORD PTR [rbx+8], rax	# MEM[(struct Variable *)_77].v_, tmp115
+	call	_Znwm	#
+	movsd	xmm3, QWORD PTR .LC7[rip]	# tmp164,
+	mov	edi, 24	#,
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Literal+16	# MEM[(struct Literal *)_117].D.22701.D.22671._vptr.AbstractExpr,
+	mov	rbp, rax	# D.48936,
+	movsd	QWORD PTR [rax+8], xmm3	# MEM[(struct Literal *)_117].c_, tmp164
+	call	_Znwm	#
+	lea	rsi, [rsp+32]	# tmp165,
+	mov	rdi, rax	# D.48936,
+	mov	QWORD PTR [rax+8], rbp	# MEM[(struct BinaryExpr *)_115].e1_, D.48936
+	mov	QWORD PTR [rax+16], rbx	# MEM[(struct BinaryExpr *)_115].e2_, D.48936
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Product+16	# MEM[(struct Product *)_115].D.23004.D.22958.D.22807._vptr.AbstractExpr,
+	call	_ZplI12AbstractExpriERS0_RKT_RKT0_	#
+	mov	edi, 16	#,
+	mov	rbp, rax	# D.48932,
+	call	_Znwm	#
+	movsd	xmm4, QWORD PTR .LC8[rip]	# tmp166,
+	mov	edi, 24	#,
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Literal+16	# MEM[(struct Literal *)_120].D.22701.D.22671._vptr.AbstractExpr,
+	mov	rbx, rax	# D.48936,
+	movsd	QWORD PTR [rax+8], xmm4	# MEM[(struct Literal *)_120].c_, tmp166
+	call	_Znwm	#
+	lea	rsi, [rsp+48]	# tmp167,
+	mov	rdi, rax	# D.48936,
+	mov	QWORD PTR [rax+8], rbp	# MEM[(struct BinaryExpr *)_122].e1_, D.48932
+	mov	QWORD PTR [rax+16], rbx	# MEM[(struct BinaryExpr *)_122].e2_, D.48936
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Product+16	# MEM[(struct Product *)_122].D.23004.D.22958.D.22807._vptr.AbstractExpr,
+	call	_ZplI12AbstractExpriERS0_RKT_RKT0_	#
+	mov	edi, 16	#,
+	mov	rbp, rax	# D.48932,
+	call	_Znwm	#
+	mov	esi, OFFSET FLAT:.LC9	#,
+	mov	edi, OFFSET FLAT:_ZSt4cout	#,
+	mov	QWORD PTR [rax+8], rbp	# MEM[(struct UnaryExpr *)_78].e_, D.48932
+	mov	QWORD PTR [rax], OFFSET FLAT:_ZTV7Sigmoid+16	# MEM[(struct Sigmoid *)_78].D.22910.D.22838.D.22807._vptr.AbstractExpr,
+	mov	rbx, rax	# D.48936,
+	call	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc	#
+	mov	rdi, rax	#, D.48931
+	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr
+	movsd	xmm5, QWORD PTR .LC8[rip]	# tmp168,
+	mov	rdi, rbx	#, D.48936
+	movsd	QWORD PTR [rsp+40], xmm5	# x, tmp168
+	call	[QWORD PTR [rax]]	# *_32
+	movapd	xmm1, xmm0	# D.48935,
+	mov	esi, OFFSET FLAT:.LC10	#,
+	movsd	xmm0, QWORD PTR [rsp+40]	#, x
+	mov	edi, 1	#,
+	mov	eax, 2	#,
+	call	__printf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr
+	movsd	xmm6, QWORD PTR .LC11[rip]	# tmp169,
+	mov	rdi, rbx	#, D.48936
+	movsd	QWORD PTR [rsp+40], xmm6	# x, tmp169
+	call	[QWORD PTR [rax]]	# *_39
+	movapd	xmm1, xmm0	# D.48935,
+	mov	esi, OFFSET FLAT:.LC10	#,
+	movsd	xmm0, QWORD PTR [rsp+40]	#, x
+	mov	edi, 1	#,
+	mov	eax, 2	#,
+	call	__printf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr
+	movsd	xmm7, QWORD PTR .LC1[rip]	# tmp170,
+	mov	rdi, rbx	#, D.48936
+	movsd	QWORD PTR [rsp+40], xmm7	# x, tmp170
+	call	[QWORD PTR [rax]]	# *_46
+	movapd	xmm1, xmm0	# D.48935,
+	mov	esi, OFFSET FLAT:.LC10	#,
+	movsd	xmm0, QWORD PTR [rsp+40]	#, x
+	mov	edi, 1	#,
+	mov	eax, 2	#,
+	call	__printf_chk	#
+	lea	rdi, [rsp+32]	# tmp172,
+	lea	rdx, [rsp+30]	# tmp171,
+	mov	esi, OFFSET FLAT:.LC12	#,
+	mov	QWORD PTR [rsp+48], 1	# MEM[(struct _Bind *)&D.43536],
+	mov	QWORD PTR [rsp+56], 0	# MEM[(struct _Bind *)&D.43536 + 8B],
+	mov	QWORD PTR [rsp+64], rbx	# MEM[(struct _Head_base *)&D.43536 + 16B]._M_head_impl, D.48936
+	call	_ZNSsC1EPKcRKSaIcE	#
+.LEHE0:
+	lea	rsi, [rsp+48]	# tmp173,
+	lea	rdi, [rsp+32]	# tmp174,
+.LEHB1:
+	call	_Z8timeExecILi10000ESt5_BindIFSt7_Mem_fnIM12AbstractExprKFdvEEPS2_EEIEEvSsT0_DpT1_	#
+.LEHE1:
+	mov	rax, QWORD PTR [rsp+32]	# tmp175, D.43542._M_dataplus._M_p
+	lea	rsi, [rsp+31]	# tmp176,
+	lea	rdi, [rax-24]	# D.48938,
+	call	_ZNSs4_Rep10_M_disposeERKSaIcE	#
+	lea	rdi, [rsp+32]	# tmp178,
+	lea	rdx, [rsp+30]	# tmp177,
+	mov	esi, OFFSET FLAT:.LC12	#,
+.LEHB2:
+	call	_ZNSsC1EPKcRKSaIcE	#
+.LEHE2:
+	mov	QWORD PTR [rsp+48], rbx	# MEM[(struct __lambda0 *)&fun], D.48936
+	call	_ZNSt6chrono3_V212steady_clock3nowEv	#
+	lea	rdi, [rsp+48]	# tmp179,
+	mov	r12, rax	# start,
+.LEHB3:
+	call	_ZZ4mainENKUlvE_clEv	#
+	call	_ZNSt6chrono3_V212steady_clock3nowEv	#
+	lea	rdi, [rsp+48]	# tmp180,
+	mov	rbp, rax	# D.48940,
+	sub	rbp, r12	# D.48940, start
+	call	_ZZ4mainENKUlvE_clEv	#
+	cvtsi2sd	xmm2, rbp	# D.48935, D.48940
+	mov	rsi, QWORD PTR [rsp+32]	# D.48937, D.43564._M_dataplus._M_p
+	mov	edi, OFFSET FLAT:_ZSt4cout	#,
+	movsd	QWORD PTR [rsp], xmm0	# %sfp,
+	mov	rdx, QWORD PTR [rsi-24]	# MEM[(struct _Rep *)_132 + -24B].D.22265._M_length, MEM[(struct _Rep *)_132 + -24B].D.22265._M_length
+	divsd	xmm2, QWORD PTR .LC3[rip]	# D.48935,
+	movsd	QWORD PTR [rsp+8], xmm2	# %sfp, D.48935
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	mov	edx, 2	#,
+	mov	esi, OFFSET FLAT:.LC2	#,
+	mov	rdi, rax	#, D.48931
+	mov	rbp, rax	# D.48931,
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	movsd	xmm0, QWORD PTR [rsp+8]	#, %sfp
+	mov	rdi, rbp	#, D.48931
+	call	_ZNSo9_M_insertIdEERSoT_	#
+	mov	edx, 14	#,
+	mov	esi, OFFSET FLAT:.LC4	#,
+	mov	rdi, rax	#, D.48942
+	mov	rbp, rax	# D.48942,
+	call	_ZSt16__ostream_insertIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_PKS3_l	#
+	movsd	xmm0, QWORD PTR [rsp]	#, %sfp
+	mov	rdi, rbp	#, D.48942
+	call	_ZNSo9_M_insertIdEERSoT_	#
+	mov	rdi, rax	#, D.48942
+	call	_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_	#
+.LEHE3:
+	mov	rax, QWORD PTR [rsp+32]	# tmp183, D.43564._M_dataplus._M_p
+	lea	rsi, [rsp+31]	# tmp184,
+	lea	rdi, [rax-24]	# D.48938,
+	call	_ZNSs4_Rep10_M_disposeERKSaIcE	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr, MEM[(struct AbstractExpr *)_78]._vptr.AbstractExpr
+	mov	rdi, rbx	#, D.48936
+	call	[QWORD PTR [rax+16]]	# MEM[(int (*__vtbl_ptr_type) () *)_65 + 16B]
+	add	rsp, 80	#,
+	.cfi_remember_state
+	.cfi_def_cfa_offset 32
+	xor	eax, eax	#
+	pop	rbx	#
+	.cfi_def_cfa_offset 24
+	pop	rbp	#
+	.cfi_def_cfa_offset 16
+	pop	r12	#
+	.cfi_def_cfa_offset 8
+	ret
+.L133:
+	.cfi_restore_state
+.L138:
+	mov	rbx, rax	# tmp159,
+	mov	rax, QWORD PTR [rsp+32]	# tmp187,
+	lea	rsi, [rsp+31]	# tmp188,
+	lea	rdi, [rax-24]	# D.48938,
+	call	_ZNSs4_Rep10_M_disposeERKSaIcE	#
+	mov	rdi, rbx	#, tmp159
+.LEHB4:
+	call	_Unwind_Resume	#
+.LEHE4:
+.L134:
+	jmp	.L138	#
+	.cfi_endproc
+.LFE2164:
+	.globl	__gxx_personality_v0
+	.section	.gcc_except_table,"a",@progbits
+.LLSDA2164:
+	.byte	0xff
+	.byte	0xff
+	.byte	0x1
+	.uleb128 .LLSDACSE2164-.LLSDACSB2164
+.LLSDACSB2164:
+	.uleb128 .LEHB0-.LFB2164
+	.uleb128 .LEHE0-.LEHB0
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB1-.LFB2164
+	.uleb128 .LEHE1-.LEHB1
+	.uleb128 .L133-.LFB2164
+	.uleb128 0
+	.uleb128 .LEHB2-.LFB2164
+	.uleb128 .LEHE2-.LEHB2
+	.uleb128 0
+	.uleb128 0
+	.uleb128 .LEHB3-.LFB2164
+	.uleb128 .LEHE3-.LEHB3
+	.uleb128 .L134-.LFB2164
+	.uleb128 0
+	.uleb128 .LEHB4-.LFB2164
+	.uleb128 .LEHE4-.LEHB4
+	.uleb128 0
+	.uleb128 0
+.LLSDACSE2164:
+	.section	.text.startup
+	.size	main, .-main
+	.p2align 4,,15
+	.type	_GLOBAL__sub_I__Z8variableRd, @function
+_GLOBAL__sub_I__Z8variableRd:
+.LFB2438:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	edi, OFFSET FLAT:_ZStL8__ioinit	#,
+	call	_ZNSt8ios_base4InitC1Ev	#
+	mov	edx, OFFSET FLAT:__dso_handle	#,
+	mov	esi, OFFSET FLAT:_ZStL8__ioinit	#,
+	mov	edi, OFFSET FLAT:_ZNSt8ios_base4InitD1Ev	#,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	jmp	__cxa_atexit	#
+	.cfi_endproc
+.LFE2438:
+	.size	_GLOBAL__sub_I__Z8variableRd, .-_GLOBAL__sub_I__Z8variableRd
+	.section	.init_array,"aw"
+	.align 8
+	.quad	_GLOBAL__sub_I__Z8variableRd
+	.weak	_ZTI12AbstractExpr
+	.section	.rodata._ZTI12AbstractExpr,"aG",@progbits,_ZTI12AbstractExpr,comdat
+	.align 16
+	.type	_ZTI12AbstractExpr, @object
+	.size	_ZTI12AbstractExpr, 16
+_ZTI12AbstractExpr:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv117__class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS12AbstractExpr
+	.weak	_ZTS12AbstractExpr
+	.section	.rodata._ZTS12AbstractExpr,"aG",@progbits,_ZTS12AbstractExpr,comdat
+	.type	_ZTS12AbstractExpr, @object
+	.size	_ZTS12AbstractExpr, 15
+_ZTS12AbstractExpr:
+	.string	"12AbstractExpr"
+	.weak	_ZTI12TerminalExpr
+	.section	.rodata._ZTI12TerminalExpr,"aG",@progbits,_ZTI12TerminalExpr,comdat
+	.align 16
+	.type	_ZTI12TerminalExpr, @object
+	.size	_ZTI12TerminalExpr, 24
+_ZTI12TerminalExpr:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS12TerminalExpr
+# <anonymous>:
+	.quad	_ZTI12AbstractExpr
+	.weak	_ZTS12TerminalExpr
+	.section	.rodata._ZTS12TerminalExpr,"aG",@progbits,_ZTS12TerminalExpr,comdat
+	.type	_ZTS12TerminalExpr, @object
+	.size	_ZTS12TerminalExpr, 15
+_ZTS12TerminalExpr:
+	.string	"12TerminalExpr"
+	.weak	_ZTI7Literal
+	.section	.rodata._ZTI7Literal,"aG",@progbits,_ZTI7Literal,comdat
+	.align 16
+	.type	_ZTI7Literal, @object
+	.size	_ZTI7Literal, 24
+_ZTI7Literal:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS7Literal
+# <anonymous>:
+	.quad	_ZTI12TerminalExpr
+	.weak	_ZTS7Literal
+	.section	.rodata._ZTS7Literal,"aG",@progbits,_ZTS7Literal,comdat
+	.type	_ZTS7Literal, @object
+	.size	_ZTS7Literal, 9
+_ZTS7Literal:
+	.string	"7Literal"
+	.weak	_ZTI8Variable
+	.section	.rodata._ZTI8Variable,"aG",@progbits,_ZTI8Variable,comdat
+	.align 16
+	.type	_ZTI8Variable, @object
+	.size	_ZTI8Variable, 24
+_ZTI8Variable:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS8Variable
+# <anonymous>:
+	.quad	_ZTI12TerminalExpr
+	.weak	_ZTS8Variable
+	.section	.rodata._ZTS8Variable,"aG",@progbits,_ZTS8Variable,comdat
+	.type	_ZTS8Variable, @object
+	.size	_ZTS8Variable, 10
+_ZTS8Variable:
+	.string	"8Variable"
+	.weak	_ZTI15NonTerminalExpr
+	.section	.rodata._ZTI15NonTerminalExpr,"aG",@progbits,_ZTI15NonTerminalExpr,comdat
+	.align 16
+	.type	_ZTI15NonTerminalExpr, @object
+	.size	_ZTI15NonTerminalExpr, 24
+_ZTI15NonTerminalExpr:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS15NonTerminalExpr
+# <anonymous>:
+	.quad	_ZTI12AbstractExpr
+	.weak	_ZTS15NonTerminalExpr
+	.section	.rodata._ZTS15NonTerminalExpr,"aG",@progbits,_ZTS15NonTerminalExpr,comdat
+	.align 16
+	.type	_ZTS15NonTerminalExpr, @object
+	.size	_ZTS15NonTerminalExpr, 18
+_ZTS15NonTerminalExpr:
+	.string	"15NonTerminalExpr"
+	.weak	_ZTI9UnaryExpr
+	.section	.rodata._ZTI9UnaryExpr,"aG",@progbits,_ZTI9UnaryExpr,comdat
+	.align 16
+	.type	_ZTI9UnaryExpr, @object
+	.size	_ZTI9UnaryExpr, 24
+_ZTI9UnaryExpr:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS9UnaryExpr
+# <anonymous>:
+	.quad	_ZTI15NonTerminalExpr
+	.weak	_ZTS9UnaryExpr
+	.section	.rodata._ZTS9UnaryExpr,"aG",@progbits,_ZTS9UnaryExpr,comdat
+	.type	_ZTS9UnaryExpr, @object
+	.size	_ZTS9UnaryExpr, 11
+_ZTS9UnaryExpr:
+	.string	"9UnaryExpr"
+	.weak	_ZTI7Sigmoid
+	.section	.rodata._ZTI7Sigmoid,"aG",@progbits,_ZTI7Sigmoid,comdat
+	.align 16
+	.type	_ZTI7Sigmoid, @object
+	.size	_ZTI7Sigmoid, 24
+_ZTI7Sigmoid:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS7Sigmoid
+# <anonymous>:
+	.quad	_ZTI9UnaryExpr
+	.weak	_ZTS7Sigmoid
+	.section	.rodata._ZTS7Sigmoid,"aG",@progbits,_ZTS7Sigmoid,comdat
+	.type	_ZTS7Sigmoid, @object
+	.size	_ZTS7Sigmoid, 9
+_ZTS7Sigmoid:
+	.string	"7Sigmoid"
+	.weak	_ZTI10BinaryExpr
+	.section	.rodata._ZTI10BinaryExpr,"aG",@progbits,_ZTI10BinaryExpr,comdat
+	.align 16
+	.type	_ZTI10BinaryExpr, @object
+	.size	_ZTI10BinaryExpr, 24
+_ZTI10BinaryExpr:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS10BinaryExpr
+# <anonymous>:
+	.quad	_ZTI15NonTerminalExpr
+	.weak	_ZTS10BinaryExpr
+	.section	.rodata._ZTS10BinaryExpr,"aG",@progbits,_ZTS10BinaryExpr,comdat
+	.type	_ZTS10BinaryExpr, @object
+	.size	_ZTS10BinaryExpr, 13
+_ZTS10BinaryExpr:
+	.string	"10BinaryExpr"
+	.weak	_ZTI7Product
+	.section	.rodata._ZTI7Product,"aG",@progbits,_ZTI7Product,comdat
+	.align 16
+	.type	_ZTI7Product, @object
+	.size	_ZTI7Product, 24
+_ZTI7Product:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS7Product
+# <anonymous>:
+	.quad	_ZTI10BinaryExpr
+	.weak	_ZTS7Product
+	.section	.rodata._ZTS7Product,"aG",@progbits,_ZTS7Product,comdat
+	.type	_ZTS7Product, @object
+	.size	_ZTS7Product, 9
+_ZTS7Product:
+	.string	"7Product"
+	.weak	_ZTI3Sum
+	.section	.rodata._ZTI3Sum,"aG",@progbits,_ZTI3Sum,comdat
+	.align 16
+	.type	_ZTI3Sum, @object
+	.size	_ZTI3Sum, 24
+_ZTI3Sum:
+# <anonymous>:
+# <anonymous>:
+	.quad	_ZTVN10__cxxabiv120__si_class_type_infoE+16
+# <anonymous>:
+	.quad	_ZTS3Sum
+# <anonymous>:
+	.quad	_ZTI10BinaryExpr
+	.weak	_ZTS3Sum
+	.section	.rodata._ZTS3Sum,"aG",@progbits,_ZTS3Sum,comdat
+	.type	_ZTS3Sum, @object
+	.size	_ZTS3Sum, 5
+_ZTS3Sum:
+	.string	"3Sum"
+	.weak	_ZTV12AbstractExpr
+	.section	.rodata._ZTV12AbstractExpr,"aG",@progbits,_ZTV12AbstractExpr,comdat
+	.align 32
+	.type	_ZTV12AbstractExpr, @object
+	.size	_ZTV12AbstractExpr, 40
+_ZTV12AbstractExpr:
+	.quad	0
+	.quad	_ZTI12AbstractExpr
+	.quad	__cxa_pure_virtual
+	.quad	_ZN12AbstractExprD1Ev
+	.quad	_ZN12AbstractExprD0Ev
+	.weak	_ZTV12TerminalExpr
+	.section	.rodata._ZTV12TerminalExpr,"aG",@progbits,_ZTV12TerminalExpr,comdat
+	.align 32
+	.type	_ZTV12TerminalExpr, @object
+	.size	_ZTV12TerminalExpr, 40
+_ZTV12TerminalExpr:
+	.quad	0
+	.quad	_ZTI12TerminalExpr
+	.quad	__cxa_pure_virtual
+	.quad	_ZN12TerminalExprD1Ev
+	.quad	_ZN12TerminalExprD0Ev
+	.weak	_ZTV7Literal
+	.section	.rodata._ZTV7Literal,"aG",@progbits,_ZTV7Literal,comdat
+	.align 32
+	.type	_ZTV7Literal, @object
+	.size	_ZTV7Literal, 40
+_ZTV7Literal:
+	.quad	0
+	.quad	_ZTI7Literal
+	.quad	_ZNK7Literal4evalEv
+	.quad	_ZN7LiteralD1Ev
+	.quad	_ZN7LiteralD0Ev
+	.weak	_ZTV8Variable
+	.section	.rodata._ZTV8Variable,"aG",@progbits,_ZTV8Variable,comdat
+	.align 32
+	.type	_ZTV8Variable, @object
+	.size	_ZTV8Variable, 40
+_ZTV8Variable:
+	.quad	0
+	.quad	_ZTI8Variable
+	.quad	_ZNK8Variable4evalEv
+	.quad	_ZN8VariableD1Ev
+	.quad	_ZN8VariableD0Ev
+	.weak	_ZTV15NonTerminalExpr
+	.section	.rodata._ZTV15NonTerminalExpr,"aG",@progbits,_ZTV15NonTerminalExpr,comdat
+	.align 32
+	.type	_ZTV15NonTerminalExpr, @object
+	.size	_ZTV15NonTerminalExpr, 40
+_ZTV15NonTerminalExpr:
+	.quad	0
+	.quad	_ZTI15NonTerminalExpr
+	.quad	__cxa_pure_virtual
+	.quad	_ZN15NonTerminalExprD1Ev
+	.quad	_ZN15NonTerminalExprD0Ev
+	.weak	_ZTV9UnaryExpr
+	.section	.rodata._ZTV9UnaryExpr,"aG",@progbits,_ZTV9UnaryExpr,comdat
+	.align 32
+	.type	_ZTV9UnaryExpr, @object
+	.size	_ZTV9UnaryExpr, 40
+_ZTV9UnaryExpr:
+	.quad	0
+	.quad	_ZTI9UnaryExpr
+	.quad	__cxa_pure_virtual
+	.quad	_ZN9UnaryExprD1Ev
+	.quad	_ZN9UnaryExprD0Ev
+	.weak	_ZTV7Sigmoid
+	.section	.rodata._ZTV7Sigmoid,"aG",@progbits,_ZTV7Sigmoid,comdat
+	.align 32
+	.type	_ZTV7Sigmoid, @object
+	.size	_ZTV7Sigmoid, 40
+_ZTV7Sigmoid:
+	.quad	0
+	.quad	_ZTI7Sigmoid
+	.quad	_ZNK7Sigmoid4evalEv
+	.quad	_ZN7SigmoidD1Ev
+	.quad	_ZN7SigmoidD0Ev
+	.weak	_ZTV10BinaryExpr
+	.section	.rodata._ZTV10BinaryExpr,"aG",@progbits,_ZTV10BinaryExpr,comdat
+	.align 32
+	.type	_ZTV10BinaryExpr, @object
+	.size	_ZTV10BinaryExpr, 40
+_ZTV10BinaryExpr:
+	.quad	0
+	.quad	_ZTI10BinaryExpr
+	.quad	__cxa_pure_virtual
+	.quad	_ZN10BinaryExprD1Ev
+	.quad	_ZN10BinaryExprD0Ev
+	.weak	_ZTV7Product
+	.section	.rodata._ZTV7Product,"aG",@progbits,_ZTV7Product,comdat
+	.align 32
+	.type	_ZTV7Product, @object
+	.size	_ZTV7Product, 40
+_ZTV7Product:
+	.quad	0
+	.quad	_ZTI7Product
+	.quad	_ZNK7Product4evalEv
+	.quad	_ZN7ProductD1Ev
+	.quad	_ZN7ProductD0Ev
+	.weak	_ZTV3Sum
+	.section	.rodata._ZTV3Sum,"aG",@progbits,_ZTV3Sum,comdat
+	.align 32
+	.type	_ZTV3Sum, @object
+	.size	_ZTV3Sum, 40
+_ZTV3Sum:
+	.quad	0
+	.quad	_ZTI3Sum
+	.quad	_ZNK3Sum4evalEv
+	.quad	_ZN3SumD1Ev
+	.quad	_ZN3SumD0Ev
+	.local	_ZStL8__ioinit
+	.comm	_ZStL8__ioinit,1,1
+	.section	.rodata.cst16,"aM",@progbits,16
+	.align 16
+.LC0:
+	.long	0
+	.long	-2147483648
+	.long	0
+	.long	0
+	.section	.rodata.cst8,"aM",@progbits,8
+	.align 8
+.LC1:
+	.long	0
+	.long	1072693248
+	.align 8
+.LC3:
+	.long	0
+	.long	1093567616
+	.align 8
+.LC7:
+	.long	0
+	.long	1073741824
+	.align 8
+.LC8:
+	.long	0
+	.long	1070596096
+	.align 8
+.LC11:
+	.long	0
+	.long	1071644672
+	.hidden	__dso_handle
+	.ident	"GCC: (Ubuntu/Linaro 4.8.1-10ubuntu9) 4.8.1"
+	.section	.note.GNU-stack,"",@progbits

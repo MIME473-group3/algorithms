@@ -25,6 +25,7 @@ class Literal : public TerminalExpr {
 public:
 	Literal(const double c) : c_(c) {};
 	virtual double eval() const { return c_; }
+
 };
 
 class Variable : public TerminalExpr {
@@ -97,32 +98,52 @@ public:
 
 //	Operators	=========================================================================
 
-Sum& operator+(const AbstractExpr& e1, const AbstractExpr& e2) {
-	return *new Sum(&e1, &e2);
+template<bool isExpr, class T>
+struct Converter {
+	static const AbstractExpr* convert(const T& t) {
+		return &t;
+	}
+};
+
+template<class T>
+struct Converter<false, T> {
+	static const AbstractExpr* convert(const T& t) {
+		static_assert(std::is_convertible<T, double>::value, "Type must be convertible to double");
+		return new Literal(t);
+	}
+};
+
+template<class T>
+const AbstractExpr* convert(const T& t) {
+	return Converter<std::is_base_of<AbstractExpr, T>::value, T>::convert(t);
 }
 
-Difference& operator-(const AbstractExpr& e1, const AbstractExpr& e2) {
-	return *new Difference(&e1, &e2);
+
+
+
+template<class A, class B>
+AbstractExpr& operator+(const A& a, const B& b) {
+
+	return *new Sum(convert<A>(a), convert<B>(b));
 }
 
-Product& operator*(const AbstractExpr& e1, const AbstractExpr& e2) {
-	return *new Product(&e1, &e2);
+template<class A, class B>
+AbstractExpr& operator-(const A& a, const B& b) {
+
+	return *new Difference(convert<A>(a), convert<B>(b));
 }
 
-Quotient& operator/(const AbstractExpr& e1, const AbstractExpr& e2) {
-	return *new Quotient(&e1, &e2);
+template<class A, class B>
+AbstractExpr& operator*(const A& a, const B& b) {
+
+	return *new Product(convert<A>(a), convert<B>(b));
 }
 
-//template<class T>
-//Sum& operator+(const AbstractExpr& e1, const T& t) {
-////	static_assert(std::is_arithmetic<T>::value, "Implemented for arithmetic types only");
-//	return *new Sum(&e1, new Literal(t));
-//}
+template<class A, class B>
+AbstractExpr& operator/(const A& a, const B& b) {
 
-//template<>
-//Sum& operator+<AbstractExpr>(const AbstractExpr& e1, const AbstractExpr& e2) {
-//	return *new Sum(&e1, &e2);
-//}
+	return *new Quotient(convert<A>(a), convert<B>(b));
+}
 
 //	Helper functions	=================================================================
 
