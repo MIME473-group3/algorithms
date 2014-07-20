@@ -32,7 +32,6 @@ find_library(
 	PATHS ${CMAKE_SOURCE_DIR}/../lib/aisdi
 )
 
-
 add_subdirectory(gtest)
 add_subdirectory(timer)
 
@@ -42,3 +41,6 @@ add_subdirectory(liniowe)
 add_subdirectory(hash)
 add_subdirectory(tree)
 add_subdirectory(sort)
+add_subdirectory(exp_templates)
+
+add_executable(count_ones count_ones.cpp)

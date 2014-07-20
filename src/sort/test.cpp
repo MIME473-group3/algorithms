@@ -73,7 +73,7 @@ TEST_F(SortTest, Shell) {
 //  ASSERT_SORTED(randomVec);
 //}
 
-TEST_F(SortTest, Quick) {
+TEST_F(SortTest, DISABLED_Quick) {
 	print();
   QuickSort(randomVec);
   print();

@@ -101,9 +101,6 @@ void timeExec(string name, Fun fun, Args... args) {
 	cout << name << ": "<< chrono::duration<double, milli>(diff).count() << " ms. Result = " << fun(args...) << endl;
 }
 
-
-
-
 int main(int argc, char** argv) {
 
 	srand(0);
