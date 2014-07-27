@@ -10,4 +10,4 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 #	Compile gtest
 add_executable(test_${PROJECT_NAME} test.cpp)
 target_link_libraries(test_${PROJECT_NAME} gtest_main)
-add_custom_command(TARGET test_${PROJECT_NAME} POST_BUILD COMMAND test_${PROJECT_NAME})
+#add_custom_command(TARGET test_${PROJECT_NAME} POST_BUILD COMMAND test_${PROJECT_NAME})
