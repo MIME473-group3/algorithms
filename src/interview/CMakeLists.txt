@@ -6,14 +6,17 @@ include_directories( ${gtest_INCLUDE_DIR} )
 
 
 set(SOURCE_FILES 
-	onlyUniqueChars
+	1.1_onlyUniqueChars
+	1.2_reverseString
+	1.3_isPermutation
+	1.4_replaceChar
 )
 
 foreach(file ${SOURCE_FILES})
 	
 	add_executable(${file} ${file}.cpp)
 	target_link_libraries(${file} gtest_main)
-	add_custom_command(TARGET ${file} POST_BUILD COMMAND test)
+	#add_custom_command(TARGET ${file} POST_BUILD COMMAND test)
 	
 endforeach()
 

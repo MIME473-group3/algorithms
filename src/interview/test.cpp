@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 
-class Test : public testing::Test {
+struct Test : public testing::Test {
 
 
 };
