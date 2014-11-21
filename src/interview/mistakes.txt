@@ -1,0 +1,2 @@
+- add checks at the beginning to cover for degenerated cases (empty strings etc.)
+- pay attention to test cases; mark the expected result for each case

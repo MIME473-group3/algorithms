@@ -10,6 +10,7 @@ set(SOURCE_FILES
 	1.2_reverseString
 	1.3_isPermutation
 	1.4_replaceChar
+	1.5_stringCompression
 )
 
 foreach(file ${SOURCE_FILES})
