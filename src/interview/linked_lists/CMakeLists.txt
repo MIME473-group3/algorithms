@@ -4,9 +4,8 @@ project( linked_lists )
 add_library(linked_list LinkedList.cpp)
 
 set(SOURCE_FILES 
-    2.1_removeDuplicates
-    2.2_addOrderedLists
-    2.2_addReversedLists
+    2.5_addOrderedLists
+    2.5_addReversedLists
 )
 
 foreach(file ${SOURCE_FILES})
