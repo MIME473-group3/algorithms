@@ -6,6 +6,7 @@
  */
 
 #include "LinkedList.h"
+#include <iostream>
 
 void LinkedList::deleteList(Node* node) {
 	if(node != nullptr) {
@@ -61,4 +62,46 @@ bool LinkedList::remove(int data) {
 		}
 	}
 	return false;
+}
+
+
+//	===	Non Class Functions	===========================================================================
+
+int size(Node* head) {
+	int size = 0;
+	while(head) {
+		++size;
+		head = head->next;
+	}
+	return size;
+}
+
+Node* pad(Node* head, int n, int value) {
+	while(n > 0) {
+		Node* node = new Node(value);
+		node->next = head;
+		head = node;
+		--n;
+	}
+	return head;
+}
+
+bool equal(Node* n1, Node* n2) {
+	if(!n1 && !n2) {
+		return true;
+	}
+
+	if(n1 && n2) {
+		return n1->data == n2->data && equal(n1->next, n2->next);
+	}
+
+	return false; //one is nullptr
+}
+
+void print(Node* head) {
+	while(head) {
+		std::cout << head->data << " ";
+		head = head->next;
+	}
+	std::cout << std::endl;
 }

@@ -5,6 +5,8 @@ add_library(linked_list LinkedList.cpp)
 
 set(SOURCE_FILES 
     2.1_removeDuplicates
+    2.2_addOrderedLists
+    2.2_addReversedLists
 )
 
 foreach(file ${SOURCE_FILES})

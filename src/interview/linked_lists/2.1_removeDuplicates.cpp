@@ -9,13 +9,13 @@
 #include "gtest/gtest.h"
 #include "Utils.h"
 
-struct Test : public testing::Test {
+struct AddListsTest : public testing::Test {
 
 
 };
 
 
-TEST_F(Test, SomeTest) {
+TEST_F(AddListsTest, SomeTest) {
 
 
 }

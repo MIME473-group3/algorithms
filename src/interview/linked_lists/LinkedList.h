@@ -42,4 +42,22 @@ public:
 	bool remove(int data);
 };
 
+struct Node {
+	int data;
+	Node* next;
+
+	Node(int data, Node* next = nullptr) : data(data), next(next) {};
+
+	void erase() {
+		if(next != nullptr) {
+			next->erase();
+		}
+		delete this;
+	}
+};
+
+int size(Node* head);
+Node* pad(Node* head, int n, int value = 0);
+bool equal(Node* n1, Node* n2);
+void print(Node* head);
 #endif /* INTERVIEW_LINKED_LISTS_LINKEDLIST_H_ */
