@@ -6,6 +6,8 @@ add_library(linked_list LinkedList.cpp)
 set(SOURCE_FILES 
     2.5_addOrderedLists
     2.5_addReversedLists
+    2.6_findLoopStart
+    2.7_isPalindrome
 )
 
 foreach(file ${SOURCE_FILES})
