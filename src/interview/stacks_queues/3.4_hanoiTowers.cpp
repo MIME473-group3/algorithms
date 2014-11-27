@@ -81,13 +81,13 @@ struct HanoiTowers {
 		}
 };
 
-struct Test : public testing::Test {
+struct IsTreeBalancedTest : public testing::Test {
 
 
 };
 
 
-TEST_F(Test, SomeTest) {
+TEST_F(IsTreeBalancedTest, SomeTest) {
 
 	HanoiTowers tower(3, 15);
 	tower.print();
