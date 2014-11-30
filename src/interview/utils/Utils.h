@@ -5,6 +5,8 @@
  *      Author: adam
  */
 
+// TODO wywołanie funkcji -> co się dzieje w procesorze, co i jak odkładane jest na stosie?
+
 #ifndef INTERVIEW_UTILS_H_
 #define INTERVIEW_UTILS_H_
 
@@ -83,6 +85,8 @@ struct Utils {
 		}
 		return true;
 	}
+
+	static std::string binaryRepr(unsigned num, int length = 8);
 
 };
 
