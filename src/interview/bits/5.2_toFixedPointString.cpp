@@ -31,13 +31,13 @@ std::string toFixedPointString(double d) {
 	return "error " + std::string(buffer.begin(), buffer.end());
 }
 
-struct Test : public testing::Test {
+struct SwapOddEvenTest : public testing::Test {
 
 
 };
 
 
-TEST_F(Test, SomeTest) {
+TEST_F(SwapOddEvenTest, SomeTest) {
 
 	LOG(ERROR) << toFixedPointString(0.754);
 }

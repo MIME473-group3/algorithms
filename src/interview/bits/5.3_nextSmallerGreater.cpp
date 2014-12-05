@@ -10,67 +10,77 @@
 #include "Utils.h"
 #include <glog/logging.h>
 
-uint findPattern(uint where, int pattern, int length) {
-
-	for(int i = 0; i < sizeof(where) * 8; ++i) {
-
-		unsigned mask = ((~0) << length + i) ^ ((~0) << i);
-		int match = (where & mask) ^ (pattern << i);
-		if(match == 0) {
+int findPattern(uint where, int pattern, int length) {
+	uint mask = (1 << length) - 1;
+	for(int i = 0; i < sizeof(where) * 8 - length; ++i) {
+		if(((where >> i) & mask) == pattern) {
 			return i;
 		}
 	}
+	return -1;
 }
 
 int isSet(uint num, int i) {
-	return (num & (1 << i)) > 0;
+	return (num >> i) & 1;
 }
 
 void set(uint& num, int i) {
 	num |= (1 << i);
 }
 
-uint rearrange(uint num, int end, int start, bool reversed = false) {
-	if(end <= start) {
-		return num;
-	}
+uint rearrangeOnes(uint num, int end, bool reversed = false) {
+
 	int ones = 0;
-	uint rearranged = num & ((~0) << end); //zeros from start to end exclusive
+	int start = 0;
 	while(start < end) {
 		ones += isSet(num, start++);
 	}
-//	for(int i = 0; i < ones; ++i) {
-//		set(rearranged, i);
-//	}
-	// 1 << ones => 1 at position ones
-	// (1 << ones) - 1 => 1s at positions (ones-1) to 0 inclusive
+	if(ones == 0) {
+		return num;
+	}
+
 	int oneMask = (1 << ones) - 1;
 	if(reversed) {
 		oneMask <<= end - ones;
 	}
+
+	uint rearranged = num & ((~0) << end); //zeros from start to end exclusive
 	return rearranged | oneMask;
 }
 
 uint bigger(uint num) {
 
-	uint i = findPattern(num, 1, 2);
-	return rearrange(num + (1 << i), i, 0);
+	int pos = findPattern(num, 1, 2);
+	if(pos != -1) {
+		num = rearrangeOnes(num + (1 << pos), pos, 0);
+	}
+	return num;
 
 }
 
 uint smaller(uint num) {
 
-	uint i = findPattern(num, 2, 2);
-	return rearrange(num - (1 << i), i, 0, true);
+	int pos = findPattern(num, 2, 2);
+	if(pos != -1) {
+		num = rearrangeOnes(num - (1 << pos), pos, true);
+	}
+	return num;
 }
 
-struct Test : public testing::Test {
+struct SwapOddEvenTest : public testing::Test {
 
 
 };
 
 
-TEST_F(Test, SomeTest) {
+TEST_F(SwapOddEvenTest, SomeTest) {
+
+	int x = 10;
+	int negated = 0;
+	while(x > 0) {
+		--negated; --x;
+	}
+	LOG(ERROR) << negated;
 
 	ASSERT_EQ(bigger(1), 2);
 	ASSERT_EQ(bigger(2), 4);

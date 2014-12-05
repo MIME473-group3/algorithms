@@ -5,6 +5,10 @@ set(SOURCE_FILES
     5.1_insertInto
     5.2_toFixedPointString
     5.3_nextSmallerGreater
+    5.6_swapOddEven
+    7.7_seq357
+    9.6_validParentheses
+    9.9_chessQueenPuzzle
 )
 
 foreach(file ${SOURCE_FILES})

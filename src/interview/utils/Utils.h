@@ -13,6 +13,7 @@
 #include <functional>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 struct Utils {
 
@@ -84,6 +85,14 @@ struct Utils {
 			}
 		}
 		return true;
+	}
+
+	template<typename T>
+	static void printContainer(const T& container) {
+		std::for_each(std::begin(container), std::end(container), [](const typename T::value_type& val) {
+			std::cout << val << " ";
+		});
+		std::cout << std::endl;
 	}
 
 	static std::string binaryRepr(unsigned num, int length = 8);
