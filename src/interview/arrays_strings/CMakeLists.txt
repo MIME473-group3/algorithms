@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 project( arrays_strings )
 
 set(SOURCE_FILES 
-    1.0_generatePermutations
 	1.1_onlyUniqueChars
 	1.2_reverseString
 	1.3_isPermutation

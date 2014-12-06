@@ -75,13 +75,13 @@ void printQueenPositions(int N) {
 	std::cout << uniques.size() << std::endl;
 }
 
-struct Test : public testing::Test {
+struct ValidParenthesesTest : public testing::Test {
 
 
 };
 
 
-TEST_F(Test, SomeTest) {
+TEST_F(ValidParenthesesTest, SomeTest) {
 
 	printQueenPositions(8);
 }

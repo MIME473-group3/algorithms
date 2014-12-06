@@ -14,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <set>
 
 struct Utils {
 
@@ -95,8 +96,20 @@ struct Utils {
 		std::cout << std::endl;
 	}
 
-	static std::string binaryRepr(unsigned num, int length = 8);
+	template<typename T>
+	static bool allEntriesUnique(const std::vector<T>& vec) {
+		std::set<T> s;
+		for(const auto& str : vec) {
+			if(s.find(str) != s.end()) {
+				return false;
+			}
+			s.insert(str);
+		}
+		return true;
+	}
 
+	static std::string binaryRepr(unsigned num, int length = 8);
+	static long factorial(int num);
 };
 
 #endif /* INTERVIEW_UTILS_H_ */

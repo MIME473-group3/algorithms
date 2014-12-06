@@ -20,3 +20,11 @@ std::string Utils::binaryRepr(unsigned num, int length) {
 	}
 	return builder.str();
 }
+
+long Utils::factorial(int num) {
+	long f = num;
+	for(int i = 1; i < num; ++i) {
+		f *= i;
+	}
+	return f;
+}
