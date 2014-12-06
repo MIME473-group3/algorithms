@@ -12,6 +12,8 @@
 #include <unordered_map>
 #include <glog/logging.h>
 
+//#define VERBOSE
+#define DP
 
 namespace std {
 	template<> struct hash<std::pair<std::string, char>> {
@@ -31,6 +33,10 @@ int waysOfParentesising(const std::string& expr, char result) {
 	static std::map<char, int(*)(const std::string&, const std::string&, char)> wayMap = {{'|', orWays}, {'&', andWays}, {'^', xorWays}};
 	static std::unordered_map<std::pair<std::string, char>, int> wayCache;
 
+#ifdef VERBOSE
+	static int count = 0;
+#endif
+
 	if(expr.empty() || (result != '0' && result != '1')) {
 		return 0;
 	}
@@ -41,10 +47,12 @@ int waysOfParentesising(const std::string& expr, char result) {
 		return 0;
 	}
 
+#ifdef DP
 	auto it = wayCache.find(std::make_pair(expr, result));
 	if(it != wayCache.end()) {
 		return it->second;
 	}
+#endif
 
 	int ways = 0;
 	for(int i = 1; i < expr.size() - 1; ++i) {
@@ -56,6 +64,9 @@ int waysOfParentesising(const std::string& expr, char result) {
 
 	wayCache.emplace(std::make_pair(expr, result), ways);
 
+#ifdef VERBOSE
+	LOG(ERROR) << "Yahooo! " << (++count);
+#endif
 	return ways;
 }
 
