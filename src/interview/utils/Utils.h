@@ -15,6 +15,7 @@
 #include <vector>
 #include <algorithm>
 #include <set>
+#include <queue>
 
 struct Utils {
 
@@ -106,6 +107,34 @@ struct Utils {
 			s.insert(str);
 		}
 		return true;
+	}
+
+	template<class NodeType, class PrintingFunction>
+	static void printTree(NodeType* root, PrintingFunction printingFunction) {
+
+		std::queue<std::pair<NodeType*, int>> nodeQueue;
+
+		int currentLevel = 0;
+		nodeQueue.emplace(root, currentLevel);
+		while(!nodeQueue.empty()) {
+			auto entry = nodeQueue.front();
+			nodeQueue.pop();
+			NodeType* currentNode = entry.first;
+			if(!currentNode) {
+				continue;
+			}
+
+			if(currentLevel != entry.second) {
+				std::cout << std::endl;
+				currentLevel = entry.second;
+			}
+			nodeQueue.emplace(currentNode->left, currentLevel + 1);
+			nodeQueue.emplace(currentNode->right, currentLevel + 1);
+
+			printingFunction(currentNode);
+			std::cout << "\t";
+		}
+		std::cout << std::endl;
 	}
 
 	static std::string binaryRepr(unsigned num, int length = 8);

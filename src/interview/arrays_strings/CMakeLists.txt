@@ -10,6 +10,7 @@ set(SOURCE_FILES
 	1.6_rotate90
 	1.7_zeroRowsCols
 	1.8_isRotation
+	reverseWordOrder
 )
 
 foreach(file ${SOURCE_FILES})

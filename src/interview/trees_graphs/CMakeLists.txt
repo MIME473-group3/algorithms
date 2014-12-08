@@ -6,6 +6,7 @@ add_library(tree_graph Graph.cpp)
 set(SOURCE_FILES 
     4.1_isBalanced
     4.2_pathBetweenTwoNodes
+    sumBetweenStrings
 )
 
 foreach(file ${SOURCE_FILES})

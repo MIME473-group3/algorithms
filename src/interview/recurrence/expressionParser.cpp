@@ -36,6 +36,10 @@ public:
 			symbols.insert(entry.first);
 		}
 
+		if(openingBrackets.size() != closingBrackets.size()) {
+			throw new std::logic_error("Sizes of openingBrackets (" + std::to_string(openingBrackets.size())
+			+ ") and closingBrackets (" + std::to_string(closingBrackets.size()) + ") do not match!");
+		}
 		addBracketsToSymbolsAndCheck(openingBrackets, closingBrackets, "There is no matching closing bracket for ");
 		addBracketsToSymbolsAndCheck(closingBrackets, openingBrackets, "There is no matching opening bracket for ");
 
@@ -119,7 +123,7 @@ private:
 	}
 };
 
-struct WaysOfParentesisingTest : public testing::Test {
+struct ExpressionParserTest : public testing::Test {
 
 	static char alternative(char c1, char c2) {
 		if(c1 == '1' || c2 == '1') {
@@ -142,7 +146,7 @@ struct WaysOfParentesisingTest : public testing::Test {
 		return '0';
 	}
 
-	WaysOfParentesisingTest() :
+	ExpressionParserTest() :
 		operands{'0', '1'},
 		operators{{'|', alternative}, {'&', conjunction}, {'^', exlusiveOr}},
 		openingBrackets{{'(', ')'}, {'{', '}'}},
@@ -157,7 +161,7 @@ struct WaysOfParentesisingTest : public testing::Test {
 };
 
 
-TEST_F(WaysOfParentesisingTest, SomeTest) {
+TEST_F(ExpressionParserTest, SomeTest) {
 
 	ASSERT_EQ(parser.parseExpression("1|0"), '1');
 	ASSERT_EQ(parser.parseExpression("1&0"), '0');
