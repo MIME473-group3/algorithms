@@ -139,33 +139,88 @@ int sumBetweenStrings(Node* root, std::string str1, std::string str2) {
 	return prefixSum(root, greater) - prefixSum(root, smaller) - greater->value;
 }
 
+struct PrefixSum {
+	Node* lastNode;
+	int sum;
+	PrefixSum(Node* lastNode, int sum) : lastNode(lastNode), sum(sum) {}
+};
+
+PrefixSum prefixSumFind(Node* root, const std::string& key) {
+	if(!root) {
+		return PrefixSum(nullptr, 0);
+	}
+
+	if(root->key > key) {
+		return prefixSumFind(root->left, key);
+	}
+
+	int sum = root->value;
+	if(root->left) {
+		sum += root->left->sum;
+	}
+
+	if(root->key == key) {
+		return PrefixSum(root, sum);
+	}
+
+	PrefixSum result = prefixSumFind(root->right, key);
+	result.sum += sum;
+	return result;
+}
+
+int sumBetweenStringsWithoutParentLink(Node* root, std::string str1, std::string str2) {
+	if(!root) {
+		return 0;
+	}
+
+	if(str1 > str2) {
+		std::swap(str1, str2);
+	}
+
+	auto smaller = prefixSumFind(root, str1);
+	auto greater = prefixSumFind(root, str2);
+	if(!smaller.lastNode || !greater.lastNode) {
+		return 0;
+	}
+
+	return greater.sum - smaller.sum - greater.lastNode->value;
+}
+
 
 struct SumBetweenStringsTest : public testing::Test {
+
+	void SetUp() {
+
+		testTree = new Node("L", 0);
+
+		insert(testTree, "H", 1);
+		insert(testTree, "C", 4);
+		insert(testTree, "K", 3);
+		insert(testTree, "A", 1);
+		insert(testTree, "D", 2);
+		insert(testTree, "J", -1);
+		insert(testTree, "P", 7);
+		insert(testTree, "N", 1);
+		insert(testTree, "T", 4);
+		insert(testTree, "M", -1);
+		insert(testTree, "O", -2);
+
+		Utils::printTree(testTree, SumBetweenStringsTest::printNode);
+	}
+
+	void TearDown() {
+		deleteTree(testTree);
+	}
 
 	static void printNode(Node* node) {
 		std::cout << node->key << "=(" << node->value << "," << node->sum << ")";
 	}
+
+	Node* testTree;
 };
 
 
-TEST_F(SumBetweenStringsTest, SomeTest) {
-
-	Node* testTree = new Node("L", 0);
-
-	insert(testTree, "H", 1);
-	insert(testTree, "C", 4);
-	insert(testTree, "K", 3);
-	insert(testTree, "A", 1);
-	insert(testTree, "D", 2);
-	insert(testTree, "J", -1);
-	insert(testTree, "P", 7);
-	insert(testTree, "N", 1);
-	insert(testTree, "T", 4);
-	insert(testTree, "M", -1);
-	insert(testTree, "O", -2);
-
-
-	Utils::printTree(testTree, SumBetweenStringsTest::printNode);
+TEST_F(SumBetweenStringsTest, WithParentLinkTest) {
 
 	ASSERT_EQ(sumBetweenStrings(testTree, "L", "L"), 0);
 	ASSERT_EQ(sumBetweenStrings(testTree, "H", "P"), 0);
@@ -174,7 +229,16 @@ TEST_F(SumBetweenStringsTest, SomeTest) {
 	ASSERT_EQ(sumBetweenStrings(testTree, "A", "M"), 9);
 	ASSERT_EQ(sumBetweenStrings(testTree, "D", "M"), 3);
 	ASSERT_EQ(sumBetweenStrings(testTree, "A", "O"), 9);
+}
 
-	deleteTree(testTree);
+TEST_F(SumBetweenStringsTest, WithoutParentLinkTest) {
+
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "L", "L"), 0);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "H", "P"), 0);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "A", "T"), 14);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "D", "T"), 8);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "A", "M"), 9);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "D", "M"), 3);
+	ASSERT_EQ(sumBetweenStringsWithoutParentLink(testTree, "A", "O"), 9);
 }
 
