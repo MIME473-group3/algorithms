@@ -23,6 +23,16 @@ struct Node {
 	: key(key), value(value), sum(value), parent(parent), left(left), right(right) {}
 };
 
+void deleteTree(Node* root) {
+	if(!root) {
+		return;
+	}
+
+	deleteTree(root->left);
+	deleteTree(root->right);
+	delete root;
+}
+
 
 bool insert(Node* root, const std::string& key, int value) {
 
@@ -96,25 +106,25 @@ Node* lowestCommonAncestor(Node* root, const std::string& key1, const std::strin
 }
 
 int prefixSum(Node* root, Node* node) {
-	int sum = node->value;
-	if(node->left) {
-		sum += node->left->sum;
-	}
 
+	int sum = 0;
 	Node* current = node;
-	while(current && current != root) {
-		current = current->parent;
-		if(current->key < node->key) {
+	while(current) {
+		if(current->key <= node->key) {
 			sum += current->value;
 			if(current->left) {
 				sum += current->left->sum;
 			}
 		}
+		current = current->parent;
 	}
 	return sum;
 }
 
 int sumBetweenStrings(Node* root, std::string str1, std::string str2) {
+	if(!root) {
+		return 0;
+	}
 
 	if(str1 > str2) {
 		std::swap(str1, str2);
@@ -122,9 +132,9 @@ int sumBetweenStrings(Node* root, std::string str1, std::string str2) {
 
 	Node* smaller = find(root, str1);
 	Node* greater = find(root, str2);
-
-	LOG(ERROR) << prefixSum(root, smaller);
-	LOG(ERROR) << prefixSum(root, greater);
+	if(!smaller || !greater) {
+		return 0;
+	}
 
 	return prefixSum(root, greater) - prefixSum(root, smaller) - greater->value;
 }
@@ -164,5 +174,7 @@ TEST_F(SumBetweenStringsTest, SomeTest) {
 	ASSERT_EQ(sumBetweenStrings(testTree, "A", "M"), 9);
 	ASSERT_EQ(sumBetweenStrings(testTree, "D", "M"), 3);
 	ASSERT_EQ(sumBetweenStrings(testTree, "A", "O"), 9);
+
+	deleteTree(testTree);
 }
 
