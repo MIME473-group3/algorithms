@@ -7,6 +7,7 @@ set(SOURCE_FILES
     4.1_isBalanced
     4.2_pathBetweenTwoNodes
     sumBetweenStrings
+    taskScheduler
 )
 
 foreach(file ${SOURCE_FILES})

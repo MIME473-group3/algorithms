@@ -11,6 +11,7 @@ set(SOURCE_FILES
 	1.7_zeroRowsCols
 	1.8_isRotation
 	reverseWordOrder
+	oilSpills
 )
 
 foreach(file ${SOURCE_FILES})
