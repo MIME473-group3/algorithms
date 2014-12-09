@@ -34,19 +34,21 @@ public:
 	}
 
 	bool addEdge(const std::string& from, const std::string& to) {
-		addVertex(from);
-		addVertex(to);
+		addVertex(from);	//	addVertex check whether it exists anyway
+		addVertex(to);	// so there's no point to check it again here
 
 		adjacent[symbolMap[from]].push_back(symbolMap[to]);
 	}
 
 	std::vector<std::string> topologicalSort() {
-		std::vector<int> group(vertices.size(), -1);
+		std::vector<bool> visited(vertices.size(), false);
+		std::vector<bool> inRecursion(vertices.size(), false); // for cycle checking
 		std::stack<int> sortStack;
 		std::vector<std::string> result;
 
+
 		for(int i = 0; i < vertices.size(); ++i) {
-			if(!topSortDFS(sortStack, group, i, i)) {
+			if(!topSortDFS(sortStack, visited, inRecursion, i)) {
 				return result;
 			}
 		}
@@ -58,25 +60,21 @@ public:
 		return result;
 	}
 
-	bool topSortDFS(std::stack<int>& sortStack, std::vector<int>& group, int source, int groupID) {
-		LOG(ERROR) << vertices[source];
-		if(group[source] != -1) {
-			if(group[source] == groupID) { //we've found a cycle!
-				for(int v : adjacent[source]) {
-					if(group[v] == groupID) {
-						return false;
-					}
-				}
-			}
+	bool topSortDFS(std::stack<int>& sortStack, std::vector<bool>& visited, std::vector<bool>& inRecursion, int source) {
+		if(visited[source]) {
 			return true; //we've been there!
 		}
-		group[source] = groupID;
+		LOG(ERROR) << vertices[source];
+
+		visited[source] = true;
+		inRecursion[source] = true;
 
 		for(int v : adjacent[source]) {
-			if(!topSortDFS(sortStack, group, v, groupID)) {
+			if(inRecursion[v] || !topSortDFS(sortStack, visited, inRecursion, v)) {
 				return false; //we've found a cycle!
 			}
 		}
+		inRecursion[source] = false;
 		sortStack.push(source);
 		return true;
 	}
@@ -114,6 +112,12 @@ TEST_F(TaskSchedulerTest, SomeTest) {
 	};
 
 	auto result = schedule(constraints);
+
+	for(const auto& edge : constraints) {
+		auto before = std::find(result.begin(), result.end(), edge.first);
+		auto after = std::find(result.begin(), result.end(), edge.second);
+		ASSERT_LT(before, after);
+	}
 
 	Utils::printVec(result);
 
