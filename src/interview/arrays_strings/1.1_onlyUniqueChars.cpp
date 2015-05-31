@@ -54,6 +54,11 @@ TEST_F(Test, WithAdditionalMemory) {
 	ASSERT_FALSE(onlyUniqueChars(strs[5]));
 }
 
+
+void foo(std::string str) {
+
+}
+
 TEST_F(Test, SortingBased) {
 
 	ASSERT_TRUE(onlyUniqueChars2(strs[0]));

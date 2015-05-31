@@ -12,6 +12,8 @@ set(SOURCE_FILES
 	1.8_isRotation
 	reverseWordOrder
 	oilSpills
+	findElemInRotatedArray
+	bestProfitStock
 )
 
 foreach(file ${SOURCE_FILES})

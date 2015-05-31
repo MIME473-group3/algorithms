@@ -23,5 +23,7 @@ add_subdirectory(sorting_algos)
 add_subdirectory(interview)
 
 add_executable(count_ones count_ones.cpp)
+add_executable(1Dto3D 1Dto3D.cpp)
+target_link_libraries(1Dto3D gtest gtest_main)
  
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
