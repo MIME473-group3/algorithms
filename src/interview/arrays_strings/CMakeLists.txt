@@ -14,6 +14,7 @@ set(SOURCE_FILES
 	oilSpills
 	findElemInRotatedArray
 	bestProfitStock
+	complementaryNumbers
 )
 
 foreach(file ${SOURCE_FILES})
